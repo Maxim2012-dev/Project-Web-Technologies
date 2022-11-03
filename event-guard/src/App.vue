@@ -23,14 +23,8 @@
     font-size: 40px;
   }
 
-  body {
-      margin: 0;
-      min-height: 100%;
-      background-color: lightgray;
-  }
-
   .header-container {
-      background-color: white;
+      background-color: gainsboro;
   }
 
   .nav-container {
