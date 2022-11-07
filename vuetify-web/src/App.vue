@@ -1,14 +1,15 @@
 <template>
-  <div class="header-container">
-    <div class="title-container">
-      <h1 id="title">EventGuard</h1>
+  <v-app>
+    <div class="header-container">
+      <div class="title-container">
+        <h1 id="title">EventGuard</h1>
+      </div>
+      <div class="nav-container">
+        <a href="login.html">Organisator</a>
+        <a href="login.html">Verhuurder</a>
+      </div>
     </div>
-    <div class="nav-container">
-      <a href="login.html">Organisator</a>
-      <a href="login.html">Verhuurder</a>
-    </div>
-  </div>
-  
+  </v-app>
 </template>
 
 <script>
