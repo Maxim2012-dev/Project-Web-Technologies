@@ -1,29 +1,43 @@
 <template>
-    <div class="mdc-text-field">
-      <input type="text" id="my-text-field" class="mdc-text-field__input first-name-input">
-      <label class="mdc-floating-label" for="my-text-field">First name</label>
-      <div class="mdc-line-ripple"></div>
-    </div>
-  </template>
+  <v-app>
+    <v-form class="form">
+      <h1>Welcome Back!</h1>
+      <h3 class="login-message">{{ login_type }} Login</h3>
+      <v-text-field outlined label="Username" id="username" prepend-inner-icon="mdi-account-circle-outline">
+      </v-text-field>
+      <v-text-field outlined label="Password" id="password" prepend-inner-icon="mdi-lock-outline">
+      </v-text-field>
+      <div>
+        <v-btn class="btn" text>Sign Up</v-btn>
+        <v-btn class="btn" depressed>Log in</v-btn>
+      </div>
+    </v-form>
+  </v-app>
+</template>
   
-  <script>
-    export default {
-      name: 'Login',
-    }
-  </script>
+<script>
+export default {
+  name: 'LoginForm',
+  props: ['login_type']
+}
+</script>
   
-  <style>
-    html, body {  
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin-top: 32px;
-    }
+<style>
+.btn {
+  margin: 15px;
+}
 
-    .mdc-text-field {
-        margin-bottom: 24px;
-        flex-shrink: 0;
-    }
-  </style>
+.login-message {
+  margin-bottom: 50px;
+  color:gray;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+}
+</style>
   
