@@ -1,4 +1,4 @@
-# event-guard
+# vuetify-web
 
 ## Project setup
 ```
