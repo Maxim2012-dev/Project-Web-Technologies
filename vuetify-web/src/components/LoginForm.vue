@@ -8,7 +8,7 @@
       <v-text-field outlined label="Password" id="password" prepend-inner-icon="mdi-lock-outline">
       </v-text-field>
       <div>
-        <v-btn class="btn" text>Sign Up</v-btn>
+        <v-btn class="btn" text @click="register_event_handler">Sign Up</v-btn>
         <v-btn class="btn" depressed>Log in</v-btn>
       </div>
     </v-form>
@@ -18,7 +18,12 @@
 <script>
 export default {
   name: 'LoginForm',
-  props: ['login_type']
+  props: ['login_type'],
+  methods: {
+    register_event_handler() {
+      this.$emit('register-event', this.login_type)
+    }
+  }
 }
 </script>
   

@@ -5,12 +5,14 @@
         <h1 id="title">EventGuard</h1>
       </div>
       <div class="nav-container">
-        <a href="#" @click="display_organizer_login">Organizer</a>
-        <a href="#" @click="display_company_login">Company</a>
+        <a href="#" @click="display_login_message('Organizer')">Organizer</a>
+        <a href="#" @click="display_login_message('Company')">Company</a>
       </div>
     </div>
-    <LoginForm v-if="this.form_toggle" :login_type="login_type"></LoginForm>
-    <SignUpForm v-else></SignUpForm>
+    <LoginForm v-if="this.form_toggle" @register-event="display_register_message" :login_type="message_type">
+    </LoginForm>
+    <SignUpForm v-else @login-event="display_login_message" :register_type="message_type">
+    </SignUpForm>
   </div>
 </template>
 
@@ -23,15 +25,17 @@ export default {
   data() {
     return {
       form_toggle: true,
-      login_type: 'Organizer'
+      message_type: 'Organizer'
     };
   },
   methods: {
-    display_organizer_login() {
-      this.login_type = 'Organizer'
+    display_login_message(type) {
+      this.form_toggle = true
+      this.message_type = type
     },
-    display_company_login() {
-      this.login_type = 'Company'
+    display_register_message(type) {
+      this.form_toggle = false
+      this.message_type = type
     }
   }
 
