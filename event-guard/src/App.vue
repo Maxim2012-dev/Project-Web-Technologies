@@ -5,23 +5,19 @@
         <h1 id="title">EventGuard</h1>
       </div>
       <div class="nav-container">
-        <a href="#" @click="display_login_message('Organizer')">Organizer</a>
-        <a href="#" @click="display_login_message('Company')">Company</a>
+        <ul>
+          <li><router-link to="/login" exact>Log in</router-link></li>
+          <li><router-link to="/register" exact>Sign Up</router-link></li>
+        </ul>
       </div>
     </div>
-    <LoginForm v-if="this.form_toggle" @register-event="display_register_message" :login_type="message_type">
-    </LoginForm>
-    <SignUpForm v-else @login-event="display_login_message" :register_type="message_type">
-    </SignUpForm>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import SignUpForm from './components/SignUpForm.vue';
-import LoginForm from './components/LoginForm.vue';
 export default {
   name: "App",
-  components: { SignUpForm, LoginForm },
   data() {
     return {
       form_toggle: true,
@@ -49,6 +45,16 @@ export default {
   font-size: 40px;
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+li {
+  display: inline-block;
+  margin: 10px 0px;
+}
+
 .header-container {
   background-color: gainsboro;
 }
@@ -60,14 +66,18 @@ export default {
 }
 
 .nav-container a {
-  text-decoration: none;
-  margin: 10px 20px;
-  font-weight: bold;
-  font-family: 'Ubuntu', Helvetica, sans-serif;
+  padding: 10px 20px;
   font-size: 20px;
+  text-decoration: none;
+  font-weight: bold;
 }
 
 .nav-container a:hover{
   color: black;
+}
+
+.router-link-active {
+  background: #eee;
+  color: #444;
 }
 </style>
