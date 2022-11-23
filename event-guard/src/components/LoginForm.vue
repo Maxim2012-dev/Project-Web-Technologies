@@ -8,7 +8,7 @@
       <v-text-field outlined label="Password" id="password" prepend-inner-icon="mdi-lock-outline">
       </v-text-field>
       <div>
-        <v-btn class="btn" text @click="register_event_handler">Sign Up</v-btn>
+        <v-btn class="btn" text to="/register">Sign Up</v-btn>
         <v-btn class="btn" depressed>Log in</v-btn>
       </div>
     </v-form>

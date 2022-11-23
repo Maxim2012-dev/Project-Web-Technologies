@@ -15,11 +15,12 @@
             <v-text-field outlined v-model="username" label="Username" prepend-inner-icon="mdi-account-circle-outline" required
             :rules="usernameRules">
             </v-text-field>
-            <v-text-field outlined v-model="password" label="Password" prepend-inner-icon="mdi-lock-outline" required
-            :rules="passwordRules">
+            <v-text-field outlined v-model="password" label="Password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
+            :type="show1 ? 'text' : 'password'" prepend-inner-icon="mdi-lock-outline" required :rules="passwordRules" 
+            @click:append="show1 = !show1">
             </v-text-field>
             <div>
-                <v-btn class="btn" text @click="login_event_handler">Log in</v-btn>
+                <v-btn class="btn" text to="/login">Log in</v-btn>
                 <v-btn class="btn" depressed :disabled="!formValidity" @click="add_user">Register</v-btn>
             </div>
         </v-form>
@@ -37,6 +38,7 @@ export default {
         email: "",
         username: "",
         password: "",
+        show1: false,
         formValidity: false,
         nameRules: [
             v => !!v || 'Name is required.'
@@ -55,7 +57,7 @@ export default {
         ],
         passwordRules: [
             v => !!v || 'Password is required.',
-            v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'a lowercase letter, number, special character and uppercase letter required.'
+            v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'a lowercase letter, number and uppercase letter required.'
         ]
     }),
     props: ['register_type'],
@@ -65,7 +67,7 @@ export default {
         },
         add_user() {
             if (this.formValidity) {
-                axios.post("http://localhost:3000/user/add", {
+                axios.post("http://localhost:3000/register", {
                     name: this.name,
                     telnr: this.telnr,
                     email: this.email,
