@@ -1,27 +1,57 @@
 <template>
   <v-app>
-    <v-form class="form">
+    <v-alert class="dialog" v-if="this.isError" type="error">{{ errorMsg }}</v-alert>
+    <v-form class="form" v-model="formValidity">
       <h1>Welcome Back!</h1>
-      <h3 class="login-message">{{ login_type }} Login</h3>
-      <v-text-field outlined label="Username" id="username" prepend-inner-icon="mdi-account-circle-outline">
+      <h3 class="login-message">log in as user or provider</h3>
+      <v-text-field outlined v-model="username" label="Username" id="username"
+        prepend-inner-icon="mdi-account-circle-outline" :rules="usernameRules">
       </v-text-field>
-      <v-text-field outlined label="Password" id="password" prepend-inner-icon="mdi-lock-outline">
+      <v-text-field outlined v-model="password" label="Password" id="password" prepend-inner-icon="mdi-lock-outline"
+        :rules="passwordRules">
       </v-text-field>
       <div>
         <v-btn class="btn" text to="/register">Sign Up</v-btn>
-        <v-btn class="btn" depressed>Log in</v-btn>
+        <v-btn class="btn" depressed :disabled="!formValidity" @click="log_in_user">Log in</v-btn>
       </div>
     </v-form>
   </v-app>
 </template>
   
 <script>
+import axios from "axios";
 export default {
   name: 'LoginForm',
-  props: ['login_type'],
+  data: () => ({
+    username: "",
+    password: "",
+    errorMsg: "",
+    isError: false,
+    formValidity: false,
+    usernameRules: [
+      v => !!v || 'Username is required.',
+    ],
+    passwordRules: [
+      v => !!v || 'Password is required.',
+    ],
+  }),
   methods: {
-    register_event_handler() {
-      this.$emit('register-event', this.login_type)
+    log_in_user() {
+      if (this.formValidity) {
+        this.isError = false;
+        axios.post("http://localhost:3000/login", {
+          username: this.username,
+          password: this.password
+        }).then(response => {
+          const status = response.data.status;
+          if (status === 'error') {
+            this.isError = true;
+            this.errorMsg = response.data.error;
+          } else {
+            console.log("token: ", response.data.data)
+          }
+        })
+      }
     }
   }
 }
@@ -34,7 +64,15 @@ export default {
 
 .login-message {
   margin-bottom: 50px;
-  color:gray;
+  color: gray;
+}
+
+.dialog {
+    width: 30%;
+    align-self: center;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
 }
 
 .form {
@@ -42,7 +80,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 30px;
 }
 </style>
   

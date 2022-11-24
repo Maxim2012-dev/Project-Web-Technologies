@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="header-container">
+    <header class="header-container">
       <div class="title-container">
         <h1 id="title">EventGuard</h1>
       </div>
@@ -10,8 +10,11 @@
           <li><router-link to="/register" exact>Sign Up</router-link></li>
         </ul>
       </div>
-    </div>
+    </header>
     <router-view></router-view>
+    <footer>
+      <!-- here goes the footer -->
+    </footer>
   </div>
 </template>
 

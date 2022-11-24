@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const organizerSchema = mongoose.Schema({
-  person_name: {
+  name: {
     type: String,
     required: true
   }, 

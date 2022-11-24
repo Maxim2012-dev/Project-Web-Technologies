@@ -1,23 +1,23 @@
 <template>
     <v-app>
+        <v-alert class="dialog" v-if="this.isError" type="error">{{ errorMsg }}</v-alert>
         <v-form class="form" v-model="formValidity">
             <h1>Sign Up Today!</h1>
-            <h3 class="register-message">{{ register_type }} Registration</h3>
+            <h3 class="register-message">choose your registration type</h3>
             <v-text-field outlined v-model="name" label="Name" prepend-inner-icon="mdi-account-circle-outline" required
-            :rules="nameRules">
+                :rules="nameRules">
             </v-text-field>
-            <v-text-field outlined v-model="telnr" label="Telephone number" prepend-inner-icon="mdi-phone-outline" required
-            :rules="telRules">
+            <v-text-field outlined v-model="telnr" label="Telephone number" prepend-inner-icon="mdi-phone-outline"
+                required :rules="telRules">
             </v-text-field>
-            <v-text-field outlined v-model="email" label="E-mail address" prepend-inner-icon="mdi-email-outline" required
-            :rules="emailRules">
+            <v-text-field outlined v-model="email" label="E-mail address" prepend-inner-icon="mdi-email-outline"
+                required :rules="emailRules">
             </v-text-field>
-            <v-text-field outlined v-model="username" label="Username" prepend-inner-icon="mdi-account-circle-outline" required
-            :rules="usernameRules">
+            <v-text-field outlined v-model="username" label="Username" prepend-inner-icon="mdi-account-circle-outline"
+                required :rules="usernameRules">
             </v-text-field>
-            <v-text-field outlined v-model="password" label="Password" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" 
-            :type="show1 ? 'text' : 'password'" prepend-inner-icon="mdi-lock-outline" required :rules="passwordRules" 
-            @click:append="show1 = !show1">
+            <v-text-field type="password" outlined v-model="password" label="Password" prepend-inner-icon="mdi-lock-outline" 
+                required :rules="passwordRules">
             </v-text-field>
             <div>
                 <v-btn class="btn" text to="/login">Log in</v-btn>
@@ -38,8 +38,9 @@ export default {
         email: "",
         username: "",
         password: "",
-        show1: false,
+        errorMsg: "",
         formValidity: false,
+        isError: false,
         nameRules: [
             v => !!v || 'Name is required.'
         ],
@@ -53,20 +54,17 @@ export default {
         ],
         usernameRules: [
             v => !!v || 'Username is required.',
-            v => v.length >= 6 || 'Username should be longer than 6 characters'
+            v => v.length >= 6 || 'Username should be longer than 6 characters.'
         ],
         passwordRules: [
             v => !!v || 'Password is required.',
             v => /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/.test(v) || 'a lowercase letter, number and uppercase letter required.'
         ]
     }),
-    props: ['register_type'],
     methods: {
-        login_event_handler() {
-            this.$emit('login-event', this.register_type)
-        },
         add_user() {
             if (this.formValidity) {
+                this.isError = false;
                 axios.post("http://localhost:3000/register", {
                     name: this.name,
                     telnr: this.telnr,
@@ -74,7 +72,11 @@ export default {
                     username: this.username,
                     password: this.password
                 }).then(response => {
-                   console.log(response.data)
+                    const status = response.data.status;
+                    if (status === 'error') {
+                        this.isError = true;
+                        this.errorMsg = response.data.error;
+                    }
                 })
             }
         }
@@ -92,11 +94,19 @@ export default {
     color: gray;
 }
 
+.dialog {
+    width: 30%;
+    align-self: center;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
 .form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    margin-top: 30px;
 }
 </style>
