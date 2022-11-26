@@ -35,7 +35,7 @@ export default {
 
 <style>
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 #title {
