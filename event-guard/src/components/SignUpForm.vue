@@ -76,6 +76,9 @@ export default {
                     if (status === 'error') {
                         this.isError = true;
                         this.errorMsg = response.data.error;
+                    } else {
+                        let message = 'Successfully created an account!';
+                        this.$router.push({ name: "login", params: { message } });
                     }
                 })
             }

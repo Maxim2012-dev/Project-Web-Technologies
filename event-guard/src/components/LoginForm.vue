@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-alert class="dialog" v-if="this.isError" type="error">{{ errorMsg }}</v-alert>
+    <v-alert class="dialog" v-if="this.isError" :type=this.typeMsg>{{ errorMsg }}</v-alert>
     <v-form class="form" v-model="formValidity">
       <h1>Welcome Back!</h1>
       <h3 class="login-message">log in as user or provider</h3>
@@ -28,6 +28,7 @@ export default {
     errorMsg: "",
     isError: false,
     formValidity: false,
+    typeMsg: 'error',
     usernameRules: [
       v => !!v || 'Username is required.',
     ],
@@ -35,6 +36,14 @@ export default {
       v => !!v || 'Password is required.',
     ],
   }),
+  mounted() {
+    let message = this.$route.params.message;
+    if (message != undefined) {
+      this.typeMsg = 'success';
+      this.isError = true;
+      this.errorMsg = message;
+    }
+  },
   methods: {
     log_in_user() {
       if (this.formValidity) {

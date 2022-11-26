@@ -82,7 +82,9 @@ app.post('/register',
       organizer.save((err) => {
         if (err && err.code === 11000) {
           return res.json({ status: 'error', error: 'Username already in use' })
-        } 
+        } else if (!err) {
+          return res.json({ status: 'success' })
+        }
       })
     }
   })  
