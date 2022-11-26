@@ -7,7 +7,7 @@
       <div class="nav-container">
         <ul>
           <li><router-link to="/login" exact>Log in</router-link></li>
-          <li><router-link to="/register" exact>Sign Up</router-link></li>
+          <li><router-link to="/register" exact>Sign up</router-link></li>
         </ul>
       </div>
     </header>
@@ -21,7 +21,7 @@
           have the ability to create their own account and search for their desired equipment. These products
           are made available by companies for organizers to view.
         </p>
-        <a href="#title">Go back to top</a>
+        <a class="link" href="#title">Go back to top</a>
       </div>
     </footer>
   </div>
@@ -55,6 +55,7 @@ li {
 }
 
 .header-container {
+  width: 100%;
   background-color: gainsboro;
 }
 
@@ -106,6 +107,10 @@ li {
   margin-bottom: 40px;
   padding: 5px;
   color: gainsboro;
+}
+
+.link:hover {
+  opacity: 0.5;
 }
 
 .router-link-active {

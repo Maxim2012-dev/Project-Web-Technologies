@@ -1,13 +1,33 @@
 <template>
     <v-app>
-      <div class="section-1">
+      <div class="section">
         <div class="text">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid eum quaerat iste officiis, 
           adipisci vel aspernatur illo, perferendis nihil, id iusto recusandae accusantium. 
           Nostrum ipsa reiciendis nesciunt blanditiis. Quia, earum.
         </div>
         <div class="image">
-          <img src="../assets/img1.jpg" class="img1" alt="event equipment">
+          <img src="../assets/img1.jpg" class="img1" alt="event tent">
+        </div>
+      </div>
+      <div class="section">
+        <div class="image">
+          <img src="../assets/img2.jpg" class="img1" alt="light equipment">
+        </div>
+        <div class="text">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid eum quaerat iste officiis, 
+          adipisci vel aspernatur illo, perferendis nihil, id iusto recusandae accusantium. 
+          Nostrum ipsa reiciendis nesciunt blanditiis. Quia, earum.
+        </div>
+      </div>
+      <div class="section">
+        <div class="text">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid eum quaerat iste officiis, 
+          adipisci vel aspernatur illo, perferendis nihil, id iusto recusandae accusantium. 
+          Nostrum ipsa reiciendis nesciunt blanditiis. Quia, earum.
+        </div>
+        <div class="image">
+          <img src="../assets/img3.jpg" class="img1" alt="stage equipment">
         </div>
       </div>
     </v-app>
@@ -20,16 +40,16 @@
   </script>
     
   <style>
-  .section-1 {
+  .section {
     display: flex;
     justify-content: center;
-    margin: 80px;
+    align-self: center;
+    margin: 50px 0px 50px;
+    width: 80%;
     background-color: gainsboro;
-    border: 2px solid red;
   }
 
   .text {
-    border: 2px solid green;
     font-family: 'Ubuntu', sans-serif;
     font-size: 2vw;
     width: 50%;
@@ -37,7 +57,6 @@
   }
 
   .image {
-    border: 2px solid green;
     margin: 25px 10px;
     width: 50%;
   }
