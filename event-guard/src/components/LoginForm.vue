@@ -54,6 +54,7 @@ export default {
         }).then(response => {
           const status = response.data.status;
           if (status === 'error') {
+            this.typeMsg = 'error';
             this.isError = true;
             this.errorMsg = response.data.error;
           } else {

@@ -34,8 +34,8 @@ db.on('error', (error) => {
 });
 
 
-let Organizer = require('./schemas/organizer_schema')
-let companyModel = require('./schemas/company_schema')
+let Organizer    = require('./schemas/organizer_schema')
+let Provider     = require('./schemas/company_schema')
 let productModel = require('./schemas/product_schema')
 
 const { check, validationResult } = require('express-validator')
@@ -45,12 +45,15 @@ const { check, validationResult } = require('express-validator')
 
 app.post('/login', async (req, res) => {
   const { username, password } = req.body
-  const user = await Organizer.findOne({ username }).lean()
+  var user = await Organizer.findOne({ username }).lean()
 
+  // try to find the right user either in organizer collection or in provider
   if (!user) {
-    return res.json({ status: 'error', error: 'Invalid username/password'})
+    user = await Provider.findOne({ username }).lean()
+    if (!user) {
+      return res.json({ status: 'error', error: 'Invalid username/password'})
+    } 
   }
-
   if (await bcrypt.compare(password, user.password)) {
     const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET)
     return res.json({ status: 'ok', data: token })
@@ -73,18 +76,26 @@ app.post('/register',
     if (!errors.isEmpty()) {
       return res.status(422).json(errors.array());
     } else {
-      const { name, telnr, email, username, password: plainTextPassword } = req.body;
+      const { radioSelect, name, telnr, email, username, password: plainTextPassword } = req.body;
       // save the password as the encrypted version of the plain text one
       const password = await bcrypt.hash(plainTextPassword, 10);
+      var new_user = undefined;
+
+      if (radioSelect == 'organizer'){
+        new_user = new Organizer({ name, telnr, email, username, password });
+      } else {
+        new_user = new Provider({ name, telnr, email, username, password });
+      }
       
       // save the new user with the parsed details to database
-      const organizer = new Organizer({ name, telnr, email, username, password });
-      organizer.save((err) => {
-        if (err && err.code === 11000) {
-          return res.json({ status: 'error', error: 'Username already in use' })
-        } else if (!err) {
-          return res.json({ status: 'success' })
-        }
-      })
+      if (new_user != undefined) {
+        new_user.save((err) => {
+          if (err && err.code === 11000) {
+            return res.json({ status: 'error', error: 'Username already in use' })
+          } else if (!err) {
+            return res.json({ status: 'success' })
+          }
+        })
+      } else { console.log("failed");}
     }
   })  

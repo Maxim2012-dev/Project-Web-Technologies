@@ -4,7 +4,11 @@
         <v-form class="form" v-model="formValidity">
             <h1>Sign Up Today!</h1>
             <h3 class="register-message">choose your registration type</h3>
-            <v-text-field outlined v-model="name" label="Name" prepend-inner-icon="mdi-account-circle-outline" required
+            <v-radio-group v-model="radioGroup" row>
+                <v-radio :label="`Organizer`" :value="'organizer'" @click="nameLabel = 'Organizer name' "></v-radio>
+                <v-radio :label="`Provider`"  :value="'provider'"  @click="nameLabel = 'Provider name'"></v-radio>
+            </v-radio-group>
+            <v-text-field outlined v-model="name" :label="nameLabel" prepend-inner-icon="mdi-account-circle-outline" required
                 :rules="nameRules">
             </v-text-field>
             <v-text-field outlined v-model="telnr" label="Telephone number" prepend-inner-icon="mdi-phone-outline"
@@ -33,6 +37,7 @@ import axios from "axios";
 export default {
     name: 'SignUpForm',
     data: () => ({
+        radioGroup: 'organizer',
         name: "",
         telnr: "",
         email: "",
@@ -41,6 +46,7 @@ export default {
         errorMsg: "",
         formValidity: false,
         isError: false,
+        nameLabel: 'Organizer name',
         nameRules: [
             v => !!v || 'Name is required.'
         ],
@@ -66,6 +72,7 @@ export default {
             if (this.formValidity) {
                 this.isError = false;
                 axios.post("http://localhost:3000/register", {
+                    radioSelect: this.radioGroup,
                     name: this.name,
                     telnr: this.telnr,
                     email: this.email,
@@ -93,7 +100,7 @@ export default {
 }
 
 .register-message {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     color: gray;
 }
 

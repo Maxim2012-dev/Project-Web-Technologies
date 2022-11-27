@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const companySchema = mongoose.Schema({
-  company_name: {
+  name: {
     type: String,
     required: true
   }, 
@@ -14,7 +14,8 @@ const companySchema = mongoose.Schema({
   },
   username: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   password: {
     type: String,
