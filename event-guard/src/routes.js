@@ -1,6 +1,8 @@
 import HomePage from './components/HomePage.vue';
 import LoginForm from './components/LoginForm.vue';
 import SignUpForm from './components/SignUpForm.vue';
+import ArticleDetails from './components/ArticleDetails.vue';
+import Article from './components/Article.vue';
 
 export default [
     { path:'/', name:'root', component:HomePage},
