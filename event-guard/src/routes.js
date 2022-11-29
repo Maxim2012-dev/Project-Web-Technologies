@@ -6,4 +6,6 @@ export default [
     { path:'/', name:'root', component:HomePage},
     { path:'/login', name:'login', component:LoginForm},
     { path:'/register', name:'register', component:SignUpForm}
+    { path: '/Article/:id', name: 'ArticleDetails', component: ArticleDetails},
+    { path: '/Article', name: 'Article', component: Article}
 ]
