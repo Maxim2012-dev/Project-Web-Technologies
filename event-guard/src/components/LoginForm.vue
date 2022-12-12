@@ -58,10 +58,17 @@ export default {
             this.isError = true;
             this.errorMsg = response.data.error;
           } else {
-            console.log("token: ", response.data.data)
+            this.change_user_state(response.data.data, response.data.type)
           }
         })
       }
+    },
+    change_user_state(token, typeUser) {
+      this.$store.commit({
+        type: 'change_user_state',
+        userToken: token,
+        userType: typeUser 
+      })
     }
   }
 }

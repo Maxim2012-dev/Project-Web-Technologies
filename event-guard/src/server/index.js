@@ -46,17 +46,19 @@ const { check, validationResult } = require('express-validator')
 app.post('/login', async (req, res) => {
   const { username, password } = req.body
   var user = await Organizer.findOne({ username }).lean()
+  var typeUser = 'organizer';
 
   // try to find the right user either in organizer collection or in provider
   if (!user) {
     user = await Provider.findOne({ username }).lean()
+    typeUser = 'provider';
     if (!user) {
       return res.json({ status: 'error', error: 'Invalid username/password'})
     } 
   }
   if (await bcrypt.compare(password, user.password)) {
     const token = jwt.sign({ id: user._id, username: user.username }, JWT_SECRET)
-    return res.json({ status: 'ok', data: token })
+    return res.json({ status: 'ok', data: token, type: typeUser})
   }
   return res.json({ status: 'error', error: 'Invalid username/password'})
 })
