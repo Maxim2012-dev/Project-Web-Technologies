@@ -8,10 +8,15 @@ export const store = new Vuex.Store({
         user: false,
         typeUser: 'default'
     },
+    getters: {
+        getUser(state) {
+          return state.user;
+        }
+    },
     mutations: {
         change_user_state (state, payload) {
-          this.user = payload.userToken;
-          this.typeUser = payload.userType;
+          state.user = payload.userToken;
+          state.typeUser = payload.userType;
         }
-      }
+    }
 })

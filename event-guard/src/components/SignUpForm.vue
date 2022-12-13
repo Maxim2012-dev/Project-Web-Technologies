@@ -24,7 +24,7 @@
                 required :rules="passwordRules">
             </v-text-field>
             <div>
-                <v-btn class="btn" text to="/login">Log in</v-btn>
+                <v-btn class="btn" text to="/login" replace>Log in</v-btn>
                 <v-btn class="btn" depressed :disabled="!formValidity" @click="add_user">Register</v-btn>
             </div>
         </v-form>
@@ -85,7 +85,7 @@ export default {
                         this.errorMsg = response.data.error;
                     } else {
                         let message = 'Successfully created an account!';
-                        this.$router.push({ name: "login", params: { message } });
+                        this.$router.replace({ name: "login", params: { message } });
                     }
                 })
             }

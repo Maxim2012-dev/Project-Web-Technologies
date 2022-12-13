@@ -11,7 +11,7 @@
         :rules="passwordRules">
       </v-text-field>
       <div>
-        <v-btn class="btn" text to="/register">Sign Up</v-btn>
+        <v-btn class="btn" text to="/register" replace>Sign Up</v-btn>
         <v-btn class="btn" depressed :disabled="!formValidity" @click="log_in_user">Log in</v-btn>
       </div>
     </v-form>
@@ -63,12 +63,20 @@ export default {
         })
       }
     },
+    redirect_to_user_page(typeUser) {
+      if (typeUser === 'organizer') {
+        this.$router.replace({ name: "organizerHome", params: { username: this.username } });
+      } else if (typeUser === 'provider') {
+        this.$router.replace({ name: "providerHome", params: { username: this.username } })
+      }
+    },
     change_user_state(token, typeUser) {
       this.$store.commit({
         type: 'change_user_state',
         userToken: token,
         userType: typeUser 
       })
+      this.redirect_to_user_page(typeUser);
     }
   }
 }

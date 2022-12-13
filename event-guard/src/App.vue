@@ -6,8 +6,8 @@
       </div>
       <div class="nav-container">
         <ul>
-          <li v-if="!user"><router-link to="/login" exact>Log in</router-link></li>
-          <li v-if="!user"><router-link to="/register" exact>Sign up</router-link></li>
+          <li v-if="!user"><router-link to="/login" replace exact>Log in</router-link></li>
+          <li v-if="!user"><router-link to="/register" replace exact>Sign up</router-link></li>
           <li v-if="user"><router-link to="/profile" exact>Profile</router-link></li>
         </ul>
       </div>
@@ -31,7 +31,7 @@
 <script>
 export default {
   name: "App",
-  computer: {
+  computed: {
     user() {
       return this.$store.state.user
     }
