@@ -102,11 +102,30 @@ app.post('/register',
     }
   })  
 
-// REQUEST FOR SEARCH BAR
+// POST REQUEST FOR SEARCH BAR RESULTS
 
 app.post('/getCompanies', async (req, res) => {
   let payload = req.body.keyValue.trim();
   let search = await Provider.find({ name: {$regex: new RegExp('^'+payload+'.*','i')}}).exec();
   search = search.slice(0, 10);
   res.send({ payload: search });
+})
+
+
+// POST REQUEST FOR GETTING SPECIFIC USER
+
+app.post('/getUser', async (req, res) => {
+  let typeUser = req.body.typeUser;
+  let usernameString = req.body.username;
+  var result = undefined;
+  // we select all fields except for the password
+  // ===> we try to limit the password exchange from/to database as much as possible
+  if (typeUser === 'organizer') {
+    result = await Organizer.find({ username: usernameString }, { password: 0 });
+  } else if (typeUser === 'provider') {
+    result = await Provider.find({ username: usernameString }, { password: 0 });
+  }
+  if (result != undefined) {
+    res.send({ payload: result });
+  } else { return res.json({ status: 'error', error: 'Something went wrong.' }) }
 })

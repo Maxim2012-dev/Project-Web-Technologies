@@ -12,6 +12,7 @@
         </ul>
       </div>
     </header>
+    <!-- where all the components get injected -->
     <router-view></router-view>
     <footer>
       <div class="footer-container">

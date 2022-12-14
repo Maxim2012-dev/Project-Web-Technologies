@@ -74,7 +74,8 @@ export default {
       this.$store.commit({
         type: 'change_user_state',
         userToken: token,
-        userType: typeUser 
+        userType: typeUser,
+        username: this.username 
       })
       this.redirect_to_user_page(typeUser);
     }

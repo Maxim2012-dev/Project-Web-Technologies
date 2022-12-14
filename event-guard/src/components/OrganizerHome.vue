@@ -40,9 +40,13 @@ export default {
         searchResults: false
     }),
     mounted() {
+        // username from login page
         let displayName = this.$route.params.username;
         if (displayName != undefined) {
             this.organizerName = displayName;
+        } else {
+        // username from central store
+            this.organizerName = this.$store.getters.getUsername;
         }
     },
     methods: {
@@ -81,7 +85,6 @@ export default {
 }
 
 .search_box button {
-    width: 5%;
     padding: 10px;
     outline: none;
     border: none;
