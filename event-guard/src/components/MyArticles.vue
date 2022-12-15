@@ -1,5 +1,5 @@
 <template>
-    <ul>
+    <ul id="myArticlesSection">
      <h1> My Articles</h1>
       <img src="../assets/add.png" class="article" alt="ADD" width= "80" @click="$router.push('/add')">
       <section class="container">
@@ -49,7 +49,7 @@
   </script>
   
   <style>
-  ul{
+  #myArticlesSection{
       width: 100%;
       height: 100vh;
       margin: auto;
