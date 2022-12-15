@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-const storedUser = window.localStorage.getItem("user");
+/* const storedUser = window.localStorage.getItem("user");
 
 let state =  {
   user: false,
@@ -13,14 +13,19 @@ let state =  {
 };
 
 if (storedUser !== undefined)
-  state = JSON.parse(storedUser);
+  state = JSON.parse(storedUser); */
 
 // 'user' represents the JSON Web Token
 // typeUser is either 'organizer' or 'provider'
 // username is the username as String
 // userObject is the user data (except for the password)
 export const store = new Vuex.Store({
-    state,
+    state: {
+      user: false,
+      typeUser: 'default',
+      username: false,
+      userObject: false
+    },
     getters: {
         getUser(state) {
           return state.user;
