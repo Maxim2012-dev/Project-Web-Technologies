@@ -17,7 +17,7 @@
   </template>
   
   <script>
-  import Post from "../components/Search.vue";
+  import Post from "../components/SearchArticles.vue";
   export default {
     //name: 'App',
     components: { Post },
