@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <div class="start_message">
-            <h1>Hi <i>{{ organizerName }}</i></h1>
+            <h1>Hi <i>{{ organizerUsername }}</i></h1>
         </div>
         <div class="search_box">
             <input type="text" placeholder="search for equipment, companies, ..." v-model="searchInput"
@@ -35,18 +35,20 @@ import axios from "axios";
 export default {
     name: 'OrganizerHome',
     data: () => ({
-        organizerName: "",
+        organizerUsername: "",
         searchInput: "",
         searchResults: false
     }),
     mounted() {
         // username from login page
+        // --> if we navigate from the login page to this page
         let displayName = this.$route.params.username;
         if (displayName != undefined) {
-            this.organizerName = displayName;
+            this.organizerUsername = displayName;
         } else {
         // username from central store
-            this.organizerName = this.$store.getters.getUsername;
+        // --> if we navigate from another page to this page
+            this.organizerUsername = this.$store.getters.getUsername;
         }
     },
     methods: {

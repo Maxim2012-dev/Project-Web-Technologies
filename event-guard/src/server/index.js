@@ -129,3 +129,18 @@ app.post('/getUser', async (req, res) => {
     res.send({ payload: result });
   } else { return res.json({ status: 'error', error: 'Something went wrong.' }) }
 })
+
+// POST REQUEST FOR UPDATING USER DATA
+
+app.post('/updateOrganizer', (req, res) => {
+  let usernameString = req.body.username;
+  // array of data
+  let data = req.body.data;
+  let filter = { username: usernameString };
+  let new_values = { $set: {name: data[0], telnr: data[1], email: data[2], username: data[3]}};
+  Organizer.updateOne(filter, new_values, function(err) {
+    if (err) {
+      return res.json({ status: 'error', error: 'Something went wrong.' })
+    } else { return res.json({ status: 'success' }) }
+  });
+})

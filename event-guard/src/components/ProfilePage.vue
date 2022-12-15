@@ -1,5 +1,6 @@
 <template>
     <v-app>
+        <v-alert class="dialog" v-if="this.isError" type="success">{{ errorMsg }}</v-alert>
         <div class="container">
             <v-row>
                 <v-col class="left_section">
@@ -10,7 +11,7 @@
                 </v-col>
                 <v-col class="middle_section">
                     <span class="section_title">Profile Settings</span>
-                    <v-form class="text_fields">
+                    <v-form class="text_fields" v-model="formValidity">
                         <label for="name">Name</label>
                         <v-text-field id="name" label="Name" :rules="nameRules" v-model="name" solo></v-text-field>
                         <label for="telnr">Telephone number</label>
@@ -21,7 +22,7 @@
                         <v-text-field id="username" label="Username" :rules="usernameRules" v-model="username" solo></v-text-field>
                     </v-form>
                     <v-btn color="purple lighten-2" class="white--text" :disabled="!formValidity" 
-                        depressed @click="save_profile">Save Profile
+                        depressed @click="saveProfile">Save Profile
                     </v-btn>
                 </v-col>
                 <v-col class="right_section">
@@ -47,6 +48,8 @@ export default {
         telnr: "",
         email: "",
         username: "",
+        errorMsg: "",
+        isError: false,
         formValidity: false,
         nameRules: [
             v => !!v || 'Name is required.'
@@ -66,7 +69,6 @@ export default {
     }),
     mounted() {
         const userData = this.$store.getters.getUserObject;
-        console.log(userData);
         // if the user data is already requested once
         if (userData) {
             this.displayUserInfo(userData);
@@ -88,6 +90,7 @@ export default {
         }
     },
     methods: {
+        // display the data in the form fields
         displayUserInfo(userData) {
             this.name = userData.name;
             this.telnr = userData.telnr;
@@ -95,8 +98,26 @@ export default {
             this.username = userData.username;
             this.password = userData.password;
         },
-        save_profile() {
-
+        // we always update every value (not efficient)
+        saveProfile() {
+            axios.post("http://localhost:3000/updateOrganizer", {
+                username: this.$store.getters.getUsername,
+                data: [this.name, this.telnr, this.email, this.username]
+            }).then(response => {
+                const status = response.data.status;
+                if (status === 'error') {
+                    console.log("something went wrong.");
+                } else {
+                    // we also update the state object of the user
+                    this.$store.commit({
+                        type: 'update_user_object',
+                        object_data: [this.name, this.telnr, this.email, this.username]
+                    })
+                    this.isError = true;
+                    this.errorMsg = "Successfully updated profile!";
+                    setTimeout(function() { this.isError = false; }.bind(this), 3000);
+                }
+            })
         }
     }
 }
