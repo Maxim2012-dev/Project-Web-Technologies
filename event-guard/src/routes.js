@@ -4,7 +4,7 @@ import SignUpForm from './components/SignUpForm.vue';
 import ArticleDetails from './components/ArticleDetails.vue';
 import OrganizerHome from './components/OrganizerHome';
 import ProfilePage from './components/ProfilePage';
-//import Article from './components/Article.vue';
+import MyArticles from './components/MyArticles.vue';
 
 export default [
     { path:'/', name:'root', component:HomePage},
@@ -12,6 +12,6 @@ export default [
     { path:'/register', name:'register', component:SignUpForm},
     { path:'/organizer-home', name:'organizerHome', component:OrganizerHome},
     { path:'/profile', name:'profilePage', component:ProfilePage},
-    { path: '/Article/:id', name: 'ArticleDetails', component: ArticleDetails}
-    //{ path: '/Article', name: 'Article', component: Article}
+    { path: '/Article/:id', name: 'ArticleDetails', component: ArticleDetails},
+    { path: '/MyArticles', name: 'MyArticles', component: MyArticles}
 ]
