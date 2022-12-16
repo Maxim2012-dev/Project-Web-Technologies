@@ -56,7 +56,8 @@ export default {
         ],
         emailRules: [
             v => !!v || 'Email address is required.',
-            v => v.includes('@') || 'Email should be valid.'
+            v => v.includes('@') || 'Email should include @.',
+            v => v.length >= 5 || 'Email should be valid.'
         ],
         usernameRules: [
             v => !!v || 'Username is required.',
