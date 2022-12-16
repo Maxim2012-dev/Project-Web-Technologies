@@ -7,7 +7,7 @@
       <v-text-field outlined v-model="username" label="Username" id="username"
         prepend-inner-icon="mdi-account-circle-outline" :rules="usernameRules">
       </v-text-field>
-      <v-text-field outlined v-model="password" label="Password" id="password" prepend-inner-icon="mdi-lock-outline"
+      <v-text-field type="password" outlined v-model="password" label="Password" id="password" prepend-inner-icon="mdi-lock-outline"
         :rules="passwordRules">
       </v-text-field>
       <div>

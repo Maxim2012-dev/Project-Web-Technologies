@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-alert class="dialog" v-if="this.isError" type="success">{{ errorMsg }}</v-alert>
-        <div class="container">
+        <div class="profile_container">
             <v-row>
                 <v-col class="left_section">
                     <img class="rounded-circle mt-5" width="150px"
@@ -124,10 +124,10 @@ export default {
 </script>
 
 <style>
-.container {
-    margin: 35px;
+.profile_container {
+    margin: auto;
+    width: 80%;
     align-self: center;
-    border: 2px solid purple;
 }
 .section_title {
     font-family: 'Ubuntu', sans-serif;
