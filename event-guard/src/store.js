@@ -55,6 +55,12 @@ export const store = new Vuex.Store({
           state.userObject.telnr = payload.object_data[1]
           state.userObject.email = payload.object_data[2]
           state.userObject.username = payload.object_data[3]
+        },
+        clear_user_state(state) {
+          state.user = false;
+          state.typeUser = 'default';
+          state.username = false;
+          state.userObject = false;
         }
     }
 })
