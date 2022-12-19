@@ -4,6 +4,7 @@ import vuetify from './plugins/vuetify'
 import VueRouter from 'vue-router'
 import Routes from './routes'
 import { store } from './store.js'
+import 'leaflet/dist/leaflet.css';
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
