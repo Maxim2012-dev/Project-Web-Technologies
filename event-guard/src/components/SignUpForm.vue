@@ -11,6 +11,9 @@
             <v-text-field outlined v-model="name" :label="nameLabel" prepend-inner-icon="mdi-account-circle-outline" required
                 :rules="nameRules">
             </v-text-field>
+            <v-text-field v-if="radioGroup === 'provider'" outlined v-model="address" label="Address" prepend-inner-icon="mdi-map-marker-outline" 
+                :rules="addressRules" required>
+            </v-text-field>
             <v-text-field outlined v-model="telnr" label="Telephone number" prepend-inner-icon="mdi-phone-outline"
                 required :rules="telRules">
             </v-text-field>
@@ -39,6 +42,7 @@ export default {
     data: () => ({
         radioGroup: 'organizer',
         name: "",
+        address: "",
         telnr: "",
         email: "",
         username: "",
@@ -49,6 +53,9 @@ export default {
         nameLabel: 'Organizer name',
         nameRules: [
             v => !!v || 'Name is required.'
+        ],
+        addressRules: [
+            v => !!v || 'Address is required.'
         ],
         telRules: [
             v => !!v || 'Telephone number is required.',
@@ -75,6 +82,7 @@ export default {
                 axios.post("http://localhost:3000/register", {
                     radioSelect: this.radioGroup,
                     name: this.name,
+                    address: this.address,
                     telnr: this.telnr,
                     email: this.email,
                     username: this.username,

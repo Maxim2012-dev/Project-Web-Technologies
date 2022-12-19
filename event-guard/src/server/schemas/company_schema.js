@@ -4,6 +4,10 @@ const companySchema = mongoose.Schema({
     type: String,
     required: true
   }, 
+  address: {
+    type: String,
+    required: true
+  },
   telnr: {
     type: String,
     required: true

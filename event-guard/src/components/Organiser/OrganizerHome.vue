@@ -7,6 +7,7 @@
             <l-map id="map_component" :zoom="zoom" :center="center" @ready="onReady" ref="map" @locationfound="onLocationFound">
                 <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
                 <l-circle-marker v-if="location" :lat-lng="location.latlng" :radius="10" />
+                <l-marker v-for="marker of this.markers" :lat-lng="marker" :key="marker.id"></l-marker>
             </l-map>
             <div class="text">
                 If you don't want to travel too far, then you can view various providers nearby you...
@@ -40,27 +41,32 @@
     
 <script>
 import axios from "axios";
-import { LMap, LTileLayer, LCircleMarker } from 'vue2-leaflet';
+import L from 'leaflet';
+import { LMap, LTileLayer, LCircleMarker, LMarker } from 'vue2-leaflet';
 export default {
     name: 'OrganizerHome',
     components: {
         LMap,
         LTileLayer,
         LCircleMarker,
+        LMarker
     },
     data: () => ({
         map: null,
         location: null,
+        geocoder: null,
         url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         attribution:
         '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
         zoom: 12,
         center: [50.0, 50.0],
+        markers: [],
         organizerUsername: "",
         searchInput: "",
         searchResults: false
     }),
     mounted() {
+        this.geocodeCompanyAddresses();
         // username from login page
         // --> if we navigate from the login page to this page
         let displayName = this.$route.params.username;
@@ -80,6 +86,28 @@ export default {
         onLocationFound(l) {
             this.location = l;
             this.center = l.latlng;
+        },
+        add_marker(location) {
+            this.markers.push(new L.LatLng(location[0].lat, location[0].lon));
+        },
+        geocodeCompanyAddresses() {
+            const Nominatim = require('nominatim-geocoder');
+            const geocoder = new Nominatim();
+            axios.get("http://localhost:3000/getAllCompanyAddresses")
+            .then(response => {
+                let results = response.data.payload;
+                if (results != null) {
+                    const addresses = results.map(company => company.address);
+                    addresses.forEach(address => 
+                        geocoder.search( { q: address } )
+                            .then((response) => {
+                                this.add_marker(response);
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                            }));
+                }
+            })
         },
         getCompanies() {
             axios.post("http://localhost:3000/getCompanies", {
