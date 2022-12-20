@@ -5,8 +5,10 @@
             <h1>Sign Up Today!</h1>
             <h3 class="register-message">choose your registration type</h3>
             <v-radio-group v-model="radioGroup" row>
-                <v-radio :label="`Organizer`" :value="'organizer'" @click="nameLabel = 'Organizer name' "></v-radio>
-                <v-radio :label="`Provider`"  :value="'provider'"  @click="nameLabel = 'Provider name'"></v-radio>
+                <v-radio :label="`Organizer`" color="deep-purple lighten-1" :value="'organizer'" @click="nameLabel = 'Organizer name' ">
+                </v-radio>
+                <v-radio :label="`Provider`"  color="deep-purple lighten-1" :value="'provider'"  @click="nameLabel = 'Provider name'">
+                </v-radio>
             </v-radio-group>
             <v-text-field outlined v-model="name" :label="nameLabel" prepend-inner-icon="mdi-account-circle-outline" required
                 :rules="nameRules">
@@ -27,8 +29,8 @@
                 required :rules="passwordRules">
             </v-text-field>
             <div>
-                <v-btn class="btn" text to="/login" replace>Log in</v-btn>
-                <v-btn class="btn" depressed :disabled="!formValidity" @click="add_user">Register</v-btn>
+                <v-btn class="btn" color="deep-purple lighten-1" text to="/login" replace>Log in</v-btn>
+                <v-btn class="btn" color="deep-purple lighten-1" outlined light :disabled="!formValidity" @click="add_user">Register</v-btn>
             </div>
         </v-form>
     </v-app>
@@ -110,7 +112,7 @@ export default {
 
 .register-message {
     margin-bottom: 30px;
-    color: gray;
+    color: #9575CD;
 }
 
 .dialog {

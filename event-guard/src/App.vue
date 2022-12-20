@@ -1,17 +1,17 @@
 <template>
-  <div class="content">
+  <div>
     <header class="header-container">
       <div class="title-container">
         <h1 id="title">EventGuard</h1>
       </div>
       <div class="nav-container">
         <ul>
-          <li v-if="!user"><router-link to="/login" replace exact>Log in</router-link></li>
-          <li v-if="!user"><router-link to="/register" replace exact>Sign up</router-link></li>
-          <li v-if="user"><router-link :to="getUserHomePage" exact>Home</router-link></li>
-          <li v-if="user"><router-link to="/profile" exact>Profile</router-link></li>
+          <li><router-link  style="color:white;" :to="getUserHomePage" replace exact>Home</router-link></li>
+          <li v-if="!user"><router-link style="color:white;" to="/login" replace exact>Log in</router-link></li>
+          <li v-if="!user"><router-link style="color:white;" to="/register" replace exact>Sign up</router-link></li>
+          <li v-if="user"><router-link  style="color:white;" to="/profile" exact>Profile</router-link></li>
           <li v-if="user">
-            <v-btn class="ma-2" dark @click="log_out_user"><v-icon dark left>mdi-logout</v-icon>Logout</v-btn>
+            <v-btn id="logout" dark outlined @click="log_out_user"><v-icon dark left>mdi-logout</v-icon>Log out</v-btn>
           </li>
         </ul>
       </div>
@@ -44,8 +44,10 @@ export default {
       const typeUser = this.$store.getters.getTypeUser;
       if (typeUser === 'organizer') {
         return '/organizer-home';
-      } else {
+      } else if (typeUser ==='provider') {
         return '/provider-home';
+      } else {
+        return '/';
       }
     }
   },
@@ -67,6 +69,7 @@ html {
 
 #title {
   font-family: 'Ubuntu', sans-serif;
+  color: white;
   padding: 20px;
   font-size: 40px;
 }
@@ -83,13 +86,14 @@ li {
 
 .header-container {
   width: 100%;
-  background-color: gainsboro;
+  background-color: #7E57C2;
 }
 
 .nav-container {
   font-family: 'Ubuntu', sans-serif;
   display: flex;
   justify-content: flex-end;
+  margin-right: 40px;
 }
 
 .nav-container a {
@@ -141,12 +145,12 @@ li {
 }
 
 .router-link-active {
-  background: #eee;
+  background: #B39DDB;
   color: #444;
 }
 
-.ma-2 {
-  margin-left: 30px;
+#logout {
+  margin-left: 50px;
   margin-right: 10px;
 }
 </style>

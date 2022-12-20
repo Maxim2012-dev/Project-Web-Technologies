@@ -1,13 +1,13 @@
 <template>
     <v-app>
-        <v-alert class="dialog" v-if="this.isError" type="success">{{ errorMsg }}</v-alert>
+        <v-alert class="dialog" v-if="this.isError" color="deep-purple lighten-1" type="success">{{ errorMsg }}</v-alert>
         <div class="profile_container">
             <v-row>
                 <v-col class="left_section">
-                    <img class="rounded-circle mt-5" width="150px"
-                        src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                    <span>{{ this.name }}</span>
-                    <span class="text-black-50">{{ this.email }}</span>
+                    <img class="rounded-circle mt-5" width="150px" :src="getUserAvatar">
+                    <span class="user_info">{{ this.name }}</span>
+                    <span class="user_info">{{ this.email }}</span>
+                    <v-btn style="margin-top:20px;" color="deep-purple lighten-1" outlined light @click="toggle_avatar">Toggle photo</v-btn>
                 </v-col>
                 <v-col class="middle_section">
                     <span class="section_title">Profile Settings</span>
@@ -21,7 +21,7 @@
                         <label for="username">Username</label>
                         <v-text-field id="username" label="Username" :rules="usernameRules" v-model="username" solo></v-text-field>
                     </v-form>
-                    <v-btn color="purple lighten-2" class="white--text" :disabled="!formValidity" 
+                    <v-btn color="deep-purple lighten-1" class="white--text" :disabled="!formValidity" 
                         depressed @click="saveProfile">Save Profile
                     </v-btn>
                 </v-col>
@@ -51,6 +51,13 @@ export default {
         errorMsg: "",
         isError: false,
         formValidity: false,
+        index: 0,
+        srcArray: [
+            'photo_1.png',
+            'photo_2.png',
+            'photo_3.png',
+            'photo_4.png'
+        ],
         nameRules: [
             v => !!v || 'Name is required.'
         ],
@@ -67,6 +74,16 @@ export default {
             v => v.length >= 6 || 'Username should be longer than 6 characters.'
         ]
     }),
+    computed: {
+        getUserAvatar() {
+            const avatar = this.$store.getters.getUserAvatar;
+            if (avatar) {
+                return require(`../assets/${avatar}`);
+            } else {
+                return require(`../assets/${this.srcArray[this.index%this.srcArray.length]}`);
+            }
+        }
+    },
     mounted() {
         const userData = this.$store.getters.getUserObject;
         // if the user data is already requested once
@@ -98,6 +115,13 @@ export default {
             this.username = userData.username;
             this.password = userData.password;
         },
+        toggle_avatar() {
+            this.index = this.index + 1;
+            this.$store.commit({
+                type: 'set_user_avatar',
+                avatar: this.srcArray[this.index]
+            })
+        },
         // we always update every value (not efficient)
         saveProfile() {
             axios.post("http://localhost:3000/updateOrganizer", {
@@ -128,6 +152,7 @@ export default {
     margin: auto;
     width: 80%;
     align-self: center;
+    font-family: 'Ubuntu', sans-serif;
 }
 .section_title {
     font-family: 'Ubuntu', sans-serif;
@@ -139,6 +164,9 @@ export default {
     align-items: center;
     flex-direction: column;
     border-right: 1px solid gainsboro;
+}
+.user_info {
+    font-size: 1.5em;
 }
 .middle_section {
     display: flex;

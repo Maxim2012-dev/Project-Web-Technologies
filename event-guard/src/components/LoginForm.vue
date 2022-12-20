@@ -11,8 +11,8 @@
         :rules="passwordRules">
       </v-text-field>
       <div>
-        <v-btn class="btn" text to="/register" replace>Sign Up</v-btn>
-        <v-btn class="btn" depressed :disabled="!formValidity" @click="log_in_user">Log in</v-btn>
+        <v-btn class="btn" color="deep-purple lighten-1" text to="/register" replace>Sign Up</v-btn>
+        <v-btn class="btn" color="deep-purple lighten-1" outlined light :disabled="!formValidity" @click="log_in_user">Log in</v-btn>
       </div>
     </v-form>
   </v-app>
@@ -91,15 +91,15 @@ export default {
 
 .login-message {
   margin-bottom: 50px;
-  color: gray;
+  color: #9575CD;
 }
 
 .dialog {
-    width: 30%;
-    align-self: center;
-    text-align: center;
-    font-weight: bold;
-    margin-top: 20px;
+  width: 30%;
+  align-self: center;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
 .form {
@@ -109,5 +109,6 @@ export default {
   align-items: center;
   margin-top: 30px;
 }
+
 </style>
   

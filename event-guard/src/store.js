@@ -24,7 +24,8 @@ export const store = new Vuex.Store({
       user: false,
       typeUser: 'default',
       username: false,
-      userObject: false
+      userObject: false,
+      profileAvatar: false
     },
     getters: {
         getUser(state) {
@@ -38,6 +39,9 @@ export const store = new Vuex.Store({
         },
         getUserObject(state) {
           return state.userObject;
+        },
+        getUserAvatar(state) {
+          return state.profileAvatar;
         }
     },
     mutations: {
@@ -61,6 +65,9 @@ export const store = new Vuex.Store({
           state.typeUser = 'default';
           state.username = false;
           state.userObject = false;
-        }
+        },
+        set_user_avatar(state, payload) {
+          state.profileAvatar = payload.avatar;
+        },
     }
 })

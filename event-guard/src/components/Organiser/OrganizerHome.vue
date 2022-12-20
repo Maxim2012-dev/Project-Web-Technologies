@@ -179,6 +179,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Ubuntu', sans-serif;;
 }
 
 .map_section {
@@ -195,7 +196,7 @@ export default {
     width: 400px;
     height: 350px;
     margin-right: 50px;
-    border: 2px dotted black;
+    border: 5px dotted #EDE7F6;
 }
 
 
@@ -205,7 +206,7 @@ export default {
 }
 
 .search_container {
-    background-color: gainsboro;
+    background-color: #EDE7F6;
     display: flex;
     flex-direction: column;
     align-items: center;
