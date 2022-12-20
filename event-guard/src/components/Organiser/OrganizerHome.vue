@@ -7,7 +7,10 @@
             <l-map id="map_component" :zoom="zoom" :center="center" @ready="onReady" ref="map" @locationfound="onLocationFound">
                 <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
                 <l-circle-marker v-if="location" :lat-lng="location.latlng" :radius="10" />
-                <l-marker v-for="marker of this.markers" :lat-lng="marker" :key="marker.id"></l-marker>
+                <l-marker v-for="marker of this.markers" :lat-lng="marker.latLng"
+                     @click="view_company_page(marker.name)" :key="marker.id">
+                    <l-tooltip>{{ marker.name }} <br> {{ marker.companyAddress }}</l-tooltip>
+                </l-marker>
             </l-map>
             <div class="text">
                 If you don't want to travel too far, then you can view various providers nearby you...
@@ -60,7 +63,7 @@
 <script>
 import axios from "axios";
 import L from 'leaflet';
-import { LMap, LTileLayer, LCircleMarker, LMarker } from 'vue2-leaflet';
+import { LMap, LTileLayer, LCircleMarker, LMarker, LTooltip } from 'vue2-leaflet';
 import { Icon } from 'leaflet';
 
 // For missing marker icon error
@@ -77,7 +80,8 @@ export default {
         LMap,
         LTileLayer,
         LCircleMarker,
-        LMarker
+        LMarker,
+        LTooltip
     },
     data: () => ({
         map: null,
@@ -117,8 +121,11 @@ export default {
             this.location = l;
             this.center = l.latlng;
         },
-        add_marker(location) {
-            this.markers.push(new L.LatLng(location[0].lat, location[0].lon));
+        add_marker(location, companyName, address) {
+            this.markers.push({
+                latLng: new L.LatLng(location[0].lat, location[0].lon),
+                name: companyName,
+                companyAddress: address});
         },
         geocodeCompanyAddresses() {
             const Nominatim = require('nominatim-geocoder');
@@ -127,11 +134,10 @@ export default {
             .then(response => {
                 let results = response.data.payload;
                 if (results != null) {
-                    const addresses = results.map(company => company.address);
-                    addresses.forEach(address => 
-                        geocoder.search( { q: address } )
+                    results.forEach(entry => 
+                        geocoder.search( { q: entry.address } )
                             .then((response) => {
-                                this.add_marker(response);
+                                this.add_marker(response, entry.name, entry.address);
                             })
                             .catch((error) => {
                                 console.log(error)
@@ -156,7 +162,6 @@ export default {
             }).then(response => {
                 let results = response.data.payload;
                 if (results != null) {
-                    console.log(results);
                     this.reviews = results;
                 }
             })
