@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-alert class="dialog" v-if="this.isAlert" type="success">{{ alertMsg }}</v-alert>
-        <v-dialog v-model="dialog" width="500">
+        <v-dialog class="ratings" v-model="dialog" width="500">
             <v-card>
                 <v-card-title class="text-h5 grey lighten-2">Write review</v-card-title>
                 <v-card-text style="margin-top: 20px;">
@@ -32,25 +32,68 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <h1> This is the page of {{ companyName }}</h1>
-        <v-btn class="ma-2" light @click="dialog = true"><v-icon light left>mdi-text-box-edit</v-icon>Rate provider</v-btn>
+          <div class="companyText">
+             <h1> {{ companyName }}</h1>
+             <h3> {{ companyEmail }}</h3>
+             <h3> {{ companyTelnr }}</h3>
+          </div>
+        <ul>
+          <section class="reviewContainer">
+             <h3> Reviews </h3>
+             <v-btn class="ma-2" light @click="dialog = true"><v-icon light left>mdi-text-box-edit</v-icon>Rate provider</v-btn>
+             <section class="scrollMenu">
+             <div v-for="review in reviews" :key="review.id" class="article">
+               <putreview :review="review"></putreview>
+             </div>
+            </section>
+          </section>
+          <section class="articlesContainer">
+             <h2 style="padding:0 250px 20px; font-size: 30px;"> Articles </h2>
+             <section class="scrollMenu">
+             <div v-for="product in products" :key="product.id" class="article">
+                 <post :product="product"></post>
+             </div>
+            </section>
+          </section>
+        </ul>
     </v-app>
 </template>
 
 <!-- https://codepen.io/hesguru/pen/BaybqXv -->
 <script>
 import axios from "axios";
+import Post from "../Company/SearchArticles.vue";
+import Putreview from "./RatingTemplate.vue"
 export default {
     name: 'ViewCompanyPage',
+    components: { Post, Putreview },
     data: () => ({
         dialog: false,
         rateValue: 0,
         description: '',
-        companyName: '',
+        companyName: 'Scouts Brussel',
+        companyEmail: 'Scoutsbrussel@gmail.com',
+        companyTelnr: '0480827921',
         isAlert: false,
         alertMsg: '',
-        disabled: true
-    }),
+        disabled: true,
+        search: " ",
+            products: [
+              { id: 1, name: "Schop", shortDescription: "stevige schop in goede staat", price: 15.00, ammount: 1, organisation: "Scouts Brussel"},
+              { id: 2, name: "Koelkast", shortDescription: "goedwerkende koelkast met vriesvak", price: 30.00, ammount: 1, organisation: "Scouts Brussel"},
+              { id: 3, name: "Sjorbalk", shortDescription: "8 meter sjorbalken", price: 20.00, ammount: 30, organisation: "Scouts Brussel"},
+              { id: 4, name: "Kookpot", shortDescription: "propere, grote kookpotten met deksel", price: 20.00, ammount: 3, organisation: "Scouts Brussel"},
+              { id: 5, name: "Koelkast", shortDescription: "energiezuinige koelkasten met wieltjes", price: 35.00, ammount: 2, organisation: "Scouts Brussel"}
+            ],
+            reviews: [
+                {id: 1, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goede service!"},
+                {id: 2, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goede service!"},
+                {id: 3, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goede service!"},
+                {id: 4, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goed service!"},
+                {id: 5, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goed service!"}
+            ]
+
+        }),
     mounted() {
         let nameCompany = this.$route.params.companyName;
         if (nameCompany != undefined) {
@@ -99,6 +142,36 @@ export default {
 </script>
 
 <style>
+
+.companyText{
+    padding: 30px 50px;
+}
+
+.ratings{
+    width: 20%;
+}
+
+.reviewContainer{
+    margin: 50px 100px 0 150px;
+    width: 20%;
+    float: right;
+
+}
+.articlesContainer{
+    float: right;
+    width: 650px;
+    background: #fff;
+
+  }
+
+  .scrollMenu{
+    height: 500px;
+    overflow-y: scroll;
+  }
+  .scrollMenu::-webkit-scrollbar {
+    display: none;
+  }
+  
 .input_container {
     display: flex;
     flex-direction: column;
