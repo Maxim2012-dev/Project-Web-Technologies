@@ -15,6 +15,7 @@ app.use("/", require("./controllers/user.js"));
 app.use("/", require("./controllers/organizer.js"));
 app.use("/", require("./controllers/provider.js"));
 app.use("/", require("./controllers/product.js"));
+app.use("/", require("./controllers/review.js"));
 
 app.listen(3000, () => {
   // To check if the server is successfully running

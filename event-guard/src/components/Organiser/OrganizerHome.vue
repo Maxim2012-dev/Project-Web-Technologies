@@ -36,6 +36,22 @@
                 </v-card>
             </div>
         </div>
+        <div class="review_container">
+            <h3 id="subtitle"> Checkout the latest reviews here </h3>
+            <div class="reviews">
+                <v-card v-for="result of this.searchResults" :key="result.id">
+                    <v-card-title>{{ result.name }}</v-card-title>
+                    <v-card-text>
+                        <v-row class="mx-0">
+                            <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
+                            <div class="grey--text ms-4">
+                                4.5 (413)
+                            </div>
+                        </v-row>
+                    </v-card-text>
+                </v-card>
+            </div>
+        </div>
     </v-app>
 </template>
     
@@ -61,12 +77,14 @@ export default {
         zoom: 12,
         center: [50.0, 50.0],
         markers: [],
+        reviews: false,
         organizerUsername: "",
         searchInput: "",
         searchResults: false
     }),
     mounted() {
         this.geocodeCompanyAddresses();
+        //this.loadReviews();
         // username from login page
         // --> if we navigate from the login page to this page
         let displayName = this.$route.params.username;
@@ -119,6 +137,9 @@ export default {
                     this.searchResults = results;
                 }
             })
+        },
+        loadReviews() {
+            // loads the reviews from database
         }
     }
 }
@@ -174,5 +195,20 @@ export default {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+}
+
+.review_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reviews {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 </style>
