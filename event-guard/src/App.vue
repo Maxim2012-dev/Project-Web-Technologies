@@ -8,6 +8,7 @@
         <ul>
           <li v-if="!user"><router-link to="/login" replace exact>Log in</router-link></li>
           <li v-if="!user"><router-link to="/register" replace exact>Sign up</router-link></li>
+          <li v-if="user"><router-link :to="getUserHomePage" exact>Home</router-link></li>
           <li v-if="user"><router-link to="/profile" exact>Profile</router-link></li>
           <li v-if="user">
             <v-btn class="ma-2" dark @click="log_out_user"><v-icon dark left>mdi-logout</v-icon>Logout</v-btn>
@@ -38,6 +39,14 @@ export default {
   computed: {
     user() {
       return this.$store.state.user
+    },
+    getUserHomePage() {
+      const typeUser = this.$store.getters.getTypeUser;
+      if (typeUser === 'organizer') {
+        return '/organizer-home';
+      } else {
+        return '/provider-home';
+      }
     }
   },
   methods: {
