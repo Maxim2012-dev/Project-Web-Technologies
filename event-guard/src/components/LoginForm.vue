@@ -57,6 +57,7 @@ export default {
             this.typeMsg = 'error';
             this.isError = true;
             this.errorMsg = response.data.error;
+            setTimeout(function() { this.isError = false; }.bind(this), 3000);
           } else {
             this.change_user_state(response.data.data, response.data.type)
           }

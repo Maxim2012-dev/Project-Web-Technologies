@@ -29,7 +29,7 @@
                         </v-row>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="red lighten-1" text>
+                        <v-btn color="red lighten-1" text @click="view_company_page(result.name)">
                             View Company
                         </v-btn>
                     </v-card-actions>
@@ -39,15 +39,17 @@
         <div class="review_container">
             <h3 id="subtitle"> Checkout the latest reviews here </h3>
             <div class="reviews">
-                <v-card v-for="result of this.searchResults" :key="result.id">
-                    <v-card-title>{{ result.name }}</v-card-title>
+                <v-card style="margin-top:40px;" v-for="review of this.reviews" :key="review.id">
+                    <v-card-title> from: <b>{{ review.username }}</b></v-card-title>
                     <v-card-text>
+                        <div class="review_details">
+                            <span> company: <b>{{ review.nameCompany }}</b></span>
+                            <span>{{ review.date }}</span>
+                        </div>
                         <v-row class="mx-0">
-                            <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
-                            <div class="grey--text ms-4">
-                                4.5 (413)
-                            </div>
+                            <v-rating id="stars" :value=review.rating color="amber" readonly size="20"></v-rating>
                         </v-row>
+                        <span id="review_description">{{ review.description }}</span>
                     </v-card-text>
                 </v-card>
             </div>
@@ -59,6 +61,16 @@
 import axios from "axios";
 import L from 'leaflet';
 import { LMap, LTileLayer, LCircleMarker, LMarker } from 'vue2-leaflet';
+import { Icon } from 'leaflet';
+
+// For missing marker icon error
+delete Icon.Default.prototype._getIconUrl;
+Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
+
 export default {
     name: 'OrganizerHome',
     components: {
@@ -84,7 +96,7 @@ export default {
     }),
     mounted() {
         this.geocodeCompanyAddresses();
-        //this.loadReviews();
+        this.loadReviews();
         // username from login page
         // --> if we navigate from the login page to this page
         let displayName = this.$route.params.username;
@@ -140,6 +152,17 @@ export default {
         },
         loadReviews() {
             // loads the reviews from database
+            axios.get("http://localhost:3000/getReviews", {
+            }).then(response => {
+                let results = response.data.payload;
+                if (results != null) {
+                    console.log(results);
+                    this.reviews = results;
+                }
+            })
+        },
+        view_company_page(name) {
+            this.$router.push({ name: "companyView", params: { companyName: name } })
         }
     }
 }
@@ -201,14 +224,33 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 50%;
 }
 
 .reviews {
     margin-top: 30px;
     margin-bottom: 30px;
-    width: 70%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+}
+
+.review_details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#stars {
+    margin: 30px;
+}
+
+#review_description {
+    display: block;
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid gainsboro;
 }
 </style>

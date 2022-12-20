@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const reviewSchema = mongoose.Schema({
-  nameUser: {
+  username: {
     type: String,
     required: true
   }, 
@@ -13,7 +13,7 @@ const reviewSchema = mongoose.Schema({
     required: true
   },
   date: {
-    type: Date,
+    type: String,
     required: true
   },
   description: {
