@@ -9,33 +9,29 @@
         </form>
         <button class="filter" @click="sortCheapest">Cheapest</button>
         <button class="filter" @click="sortExpensive">Most expensive</button>
+        <section class="scrollfield">
         <div v-for="product in filteredProducts" :key="product.id" class="article">
-          <article>
-            <router-link :to="{ name: 'ArticleDetails', params: { id: product.id }}">
-                <h3>{{ product.name }}</h3>
-                <b> € {{ product.price }}</b>
-                <p>{{ product.shortDescription }} </p>
-            </router-link>
-            <v-btn class="addBtn" color="deep-purple lighten-1" text @click="add_to_wishlist">Add to wishlist</v-btn>
-        </article>
+          <post :product="product"></post>
        </div>
+      </section>
       </section>
     </ul>
   </template>
   
   <script>
+  import Post from "./SearchArticles.vue";
   export default {
-      name: 'myArticles',
+    components: { Post },
       data () {
         //db.Providers.find();
           return {
             search: " ",
             products: [
-              { id: 1, name: "Schop", shortDescription: "stevige schop in goede staat", price: 15.00, ammount: 1, organisation: "Scouts Brussel"},
-              { id: 2, name: "Koelkast", shortDescription: "goedwerkende koelkast met vriesvak", price: 30.00, ammount: 1, organisation: "Scouts Brussel"},
-              { id: 3, name: "Sjorbalk", shortDescription: "8 meter sjorbalken", price: 20.00, ammount: 30, organisation: "Scouts Brussel"},
-              { id: 4, name: "Kookpot", shortDescription: "propere, grote kookpotten met deksel", price: 20.00, ammount: 3, organisation: "Scouts Brussel"},
-              { id: 5, name: "Koelkast", shortDescription: "energiezuinige koelkasten met wieltjes", price: 35.00, ammount: 2, organisation: "Scouts Brussel"}
+              { id: 1, name: " Schovel", shortDescription: "solid shovel in good condition", price: 15.00, organisation: "Scouts Brussel"},
+              { id: 2, name: " Fridge", shortDescription: "good-working refrigerator with freezer compartment", price: 30.00, organisation: "Scouts Brussel"},
+              { id: 3, name: " Lashing beam", shortDescription: "8 meter lashing beams", price: 20.00, organisation: "Scouts Brussel"},
+              { id: 4, name: " Cooking pot", shortDescription: "clean, large cooking pots with lids", price: 20.00, organisation: "Scouts Brussel"},
+              { id: 5, name: " Fridge", shortDescription: "energy-efficient refrigerators with wheels", price: 35.00, organisation: "Scouts Brussel"}
             ]
           }
         },
@@ -102,9 +98,6 @@
   
   .container{
     width: 650px;
-    height: 600px;
-    background: #fff;
-    overflow-y: scroll;
   }
   
   .container form{
@@ -116,7 +109,7 @@
     align-items: center;
   }
   
-  .container::-webkit-scrollbar {
+  .scrollfield::-webkit-scrollbar {
     display: none;
   }
   
@@ -128,6 +121,12 @@
     font-size: 16px;
     font-weight: 600;
     padding: 8px 10px;
+  }
+
+  .scrollfield{
+    height: 400px;
+    background: #fff;
+    overflow-y: scroll;
   }
   
   .filter{
