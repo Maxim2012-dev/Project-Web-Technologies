@@ -51,7 +51,14 @@
              <h2 style="padding:0 250px 20px; font-size: 30px;"> Articles </h2>
              <section class="scrollMenu">
              <div v-for="product in products" :key="product.id" class="article">
-                 <post :product="product"></post>
+                <article>
+                    <router-link :to="{ name: 'ArticleDetails', params: { id: product.id }}">
+                        <h3>{{ product.name }}</h3>
+                        <b> € {{ product.price }}</b>
+                        <p>{{ product.shortDescription }} </p>
+                    </router-link>
+                    <v-btn color="deep-purple lighten-1" text @click="add_to_wishlist(product)">Add to wishlist</v-btn>
+                </article>
              </div>
             </section>
           </section>
@@ -62,11 +69,10 @@
 <!-- https://codepen.io/hesguru/pen/BaybqXv -->
 <script>
 import axios from "axios";
-import Post from "../Company/SearchArticles.vue";
 import Putreview from "./RatingTemplate.vue"
 export default {
     name: 'ViewCompanyPage',
-    components: { Post, Putreview },
+    components: {  Putreview },
     data: () => ({
         dialog: false,
         rateValue: 0,
@@ -136,6 +142,20 @@ export default {
                     console.log(response.data.error);
                 }
             })
+        },
+        add_to_wishlist(product) {
+            axios.post("http://localhost:3000/addToWishlist", {
+                organizerUserName: this.$store.getters.getUsername,
+                product_name: product.name,
+                company_name: this.companyName,
+                description: product.description,
+                rent_price: product.price
+            }).then(response => {
+                let result = response.data.payload;
+                if (result != undefined) {
+                    console.log("error - sa");
+                }
+            })
         }
     }
 }
@@ -157,20 +177,22 @@ export default {
     float: right;
 
 }
+
 .articlesContainer{
     float: right;
     width: 650px;
     background: #fff;
 
-  }
+}
 
-  .scrollMenu{
+.scrollMenu{
     height: 500px;
     overflow-y: scroll;
-  }
-  .scrollMenu::-webkit-scrollbar {
+}
+
+.scrollMenu::-webkit-scrollbar {
     display: none;
-  }
+}
   
 .input_container {
     display: flex;

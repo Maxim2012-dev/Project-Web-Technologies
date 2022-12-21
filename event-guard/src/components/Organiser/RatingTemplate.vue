@@ -8,7 +8,8 @@
 
 <script>
 export default {
- props: ["review"]
+    name: 'ratingTemplate',
+    props: ["review"]
 }
 </script>
 

@@ -5,7 +5,7 @@
             <v-row>
                 <v-col class="left_section">
                     <img class="rounded-circle mt-5" width="150px" :src="getUserAvatar">
-                    <span class="user_info">{{ this.name }}</span>
+                    <span style="margin-top:30px;" class="user_info">{{ this.name }}</span>
                     <span class="user_info">{{ this.email }}</span>
                     <v-btn style="margin-top:20px;" color="deep-purple lighten-1" outlined light @click="toggle_avatar">Toggle photo</v-btn>
                 </v-col>
@@ -26,10 +26,13 @@
                     </v-btn>
                 </v-col>
                 <v-col class="right_section">
-                    <span class="section_title">Edogaru</span>
-                    <div class="text_fields">
-                        <v-text-field label="Name" solo></v-text-field>
-                        <v-text-field label="Telephone number" solo></v-text-field>
+                    <span class="section_title">My Wishlist</span>
+                    <div class="products">
+                        <div class="product" v-for="product in wishlistProducts" :key="product.id">
+                            <h3>{{ product.product_name }}</h3>
+                            <p>  company: <i>{{ product.company_name }}</i></p>
+                            <p>  price:  <b> € {{ product.rent_price }} </b></p>
+                        </div>
                     </div>
                 </v-col>
             </v-row>
@@ -58,6 +61,7 @@ export default {
             'photo_3.png',
             'photo_4.png'
         ],
+        wishlistProducts: null,
         nameRules: [
             v => !!v || 'Name is required.'
         ],
@@ -105,6 +109,7 @@ export default {
                 this.displayUserInfo(result[0]);
             })
         }
+        this.getWishlistProducts(this.$store.getters.getUsername);
     },
     methods: {
         // display the data in the form fields
@@ -114,6 +119,18 @@ export default {
             this.email = userData.email;
             this.username = userData.username;
             this.password = userData.password;
+        },
+        getWishlistProducts(username) {
+            axios.post("http://localhost:3000/getWishlistContent", {
+                organizerUserName: username
+            }).then(response => {
+                let result = response.data.payload;
+                if (result != undefined) {
+                    this.wishlistProducts = result;
+                } else {
+                    console.log("result undefined");
+                }
+            })
         },
         toggle_avatar() {
             this.index = this.index + 1;
@@ -177,6 +194,14 @@ export default {
 }
 .right_section {
     padding: 50px;
+}
+.products {
+    margin-top: 20px;
+    height: 450px;
+    overflow-y: scroll;
+}
+.product {
+    border-bottom: 2px solid gainsboro;
 }
 .text_fields {
     margin-top: 20px;
