@@ -10,17 +10,22 @@
         <button class="filter" @click="sortCheapest">Cheapest</button>
         <button class="filter" @click="sortExpensive">Most expensive</button>
         <div v-for="product in filteredProducts" :key="product.id" class="article">
-          <post :product="product"></post>
+          <article>
+            <router-link :to="{ name: 'ArticleDetails', params: { id: product.id }}">
+                <h3>{{ product.name }}</h3>
+                <b> € {{ product.price }}</b>
+                <p>{{ product.shortDescription }} </p>
+            </router-link>
+            <v-btn class="addBtn" color="deep-purple lighten-1" text @click="add_to_wishlist">Add to wishlist</v-btn>
+        </article>
        </div>
       </section>
     </ul>
   </template>
   
   <script>
-  import Post from "./SearchArticles.vue";
   export default {
-    //name: 'App',
-    components: { Post },
+      name: 'myArticles',
       data () {
         //db.Providers.find();
           return {

@@ -28,6 +28,7 @@
                 <v-col class="right_section">
                     <span class="section_title">My Wishlist</span>
                     <div class="products">
+                        <p v-if="wishlistProducts === null"> no products added yet </p>
                         <div class="product" v-for="product in wishlistProducts" :key="product.id">
                             <h3>{{ product.product_name }}</h3>
                             <p>  company: <i>{{ product.company_name }}</i></p>
