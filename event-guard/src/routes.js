@@ -7,6 +7,7 @@ import ProviderHome from './components/Company/ProviderHome';
 import CompanyView from './components/Organiser/ViewCompanyPage';
 import ProfilePage from './components/ProfilePage';
 import MyArticles from './components/Company/MyArticles.vue';
+import ProductForm from './components/Company/ProductForm.vue';
 
 export default [
     { path:'/', name:'root', component:HomePage},
@@ -17,5 +18,6 @@ export default [
     { path:'/company_view', name:'companyView', component:CompanyView},
     { path:'/profile', name:'profilePage', component:ProfilePage},
     { path: '/Article/:id', name: 'ArticleDetails', component: ArticleDetails},
-    { path: '/MyArticles', name: 'MyArticles', component: MyArticles}
+    { path: '/MyArticles', name: 'MyArticles', component: MyArticles},
+    { path: '/addProduct', name: 'addProduct', component: ProductForm}
 ]
