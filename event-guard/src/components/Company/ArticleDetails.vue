@@ -1,16 +1,16 @@
 <template>
   <v-app>
+    <div class="detailsCont">
     <h1>Article Details</h1>
-    <h4> Product-ID is {{ this.productId }}</h4>
-    <img src="../../assets/koelkast.jpg" alt="koelkast" max-width="500" max-height="500">
-    <h2> € 30.00 </h2>
-    <h3> goedwerkende koelkast met vriesvak </h3>
-    <div id="ammountContainer">
-      <button v-on:click="decrementCounter" id="decrement">-</button>
-      <div id="number">{{ count }}</div>
-      <button v-on:click="incrementCounter" id="increment">+</button>
-    </div>
-    <button id="orderButton"> Add to shopping cart </button>
+    <main>
+    <img src="../../assets/koelkast.jpg" alt="koelkast" style="width:100%; max-width:500px;">
+    <div class="details">
+    <h2 class="detail"> € 30.00 </h2>
+    <h3 class="detail"> goedwerkende koelkast met vriesvak </h3>
+    <button class="filter"> Add to shopping cart </button>
+  </div>
+  </main>
+  </div>
   </v-app>
 </template>
 
@@ -19,7 +19,6 @@ export default {
   data() {
     return {
       productId: this.$route.params.id,
-      count: 0
     }
   },
   methods: {
@@ -38,38 +37,35 @@ export default {
 </script>
 
 <style>
-#ammountContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  align-self: center;
-}
-
-#number {
-  height: 25px;
-  width: 75px;
-  border: 1px solid black;
-  text-align: center;
-  background-color: white;
-  margin: 0 5px;
-}
-
-#increment {
-  height: 27px;
-  width: 100px;
-
-}
-
-#decrement {
-  height: 27px;
-  width: 100px;
-
-}
-
 #orderButton {
   margin: 12px;
   height: 30px;
   width: 150px;
+}
+
+.detailsCont{
+  box-sizing: border-box;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+main{ 
+  flex-direction: row;
+  padding: 3em 3em;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  margin: 30px 30px;
+
+}
+
+.details {
+  flex-direction: column;
+  padding: 60px;
+}
+
+.detail {
+  padding-bottom: 50px;
 }
 </style>
