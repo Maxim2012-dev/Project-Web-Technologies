@@ -13,8 +13,8 @@ const productSchema = mongoose.Schema({
     required: true
   },
   rent_price: {
-    type: Number,
+    type: String,
     required: true
-  }
+  },
 });
 const product = (module.exports = mongoose.model("product", productSchema));
