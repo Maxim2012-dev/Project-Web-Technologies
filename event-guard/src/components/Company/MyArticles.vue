@@ -1,7 +1,7 @@
 <template>
     <ul id="myArticlesSection">
-     <h1> My Articles</h1>
-      <img src="../../assets/add.png" class="article" alt="ADD" width= "80" @click="$router.push('/add')">
+     <h1 style="padding: 40px; font-size: 40px;"> My Articles</h1>
+      <img src="../../assets/add.png" class="article" alt="ADD" width= "80" @click="$router.push('/addProduct')">
       <section class="container">
         <form>
           <img class="searchIcon" src="../../assets/search.png" alt="">
@@ -56,6 +56,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-family: 'Ubuntu', sans-serif;
   }
   
   .article{
@@ -127,6 +128,9 @@
   .filter{
     padding: 5px;
     margin: 10px;
+    background-color: rgb(245, 245, 245); 
+    padding: 10px; 
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 1.5px;
   }
 
   .searchbar {
