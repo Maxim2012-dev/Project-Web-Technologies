@@ -1,13 +1,18 @@
 <template>
   <v-app>
     <div class="detailsCont">
-    <h1>Article Details</h1>
+    <h1 style="padding: 30px;">Article Details</h1>
     <main>
     <img src="../../assets/koelkast.jpg" alt="koelkast" style="width:100%; max-width:500px;">
     <div class="details">
+    <h1 class="detail"> Fridge </h1>
+    <h3 class="detail"> good-working refrigerator with freezer compartment </h3>
+    <h3> Details:</h3>
+    <h4 class="detail"> Energy label: D - Height: 186 cm - Width: 60 cm - Weight: 65,95kg</h4>
     <h2 class="detail"> € 30.00 </h2>
-    <h3 class="detail"> goedwerkende koelkast met vriesvak </h3>
-    <button class="filter"> Add to shopping cart </button>
+    <h3> Contact company:</h3>
+    <h4> Scoutsbrussel@gmail.com</h4>
+    <h4> 0482562189 </h4>
   </div>
   </main>
   </div>
