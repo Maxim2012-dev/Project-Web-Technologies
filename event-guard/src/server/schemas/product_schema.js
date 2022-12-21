@@ -4,12 +4,16 @@ const productSchema = mongoose.Schema({
     type: String,
     required: true
   }, 
-  type: {
+  description: {
     type: String,
     required: true
   },
   rent_price: {
-    type: Number,
+    type: String,
+    required: true
+  },
+  details: {
+    type: String,
     required: true
   }
 });
