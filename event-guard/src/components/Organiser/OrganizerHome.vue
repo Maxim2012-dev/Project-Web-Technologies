@@ -20,8 +20,8 @@
             <h3 id="subtitle"> Looking for a specific equipment provider? Look it up here.</h3>
             <input type="text" id="search_box" placeholder="search for companies..." v-model="searchInput" @keyup="getCompanies">
             <div class="cards">
-                <v-card v-for="result of this.searchResults" :key="result.id">
-                    <v-img src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+                <v-card class="single_card" v-for="result of this.searchResults" :key="result.id">
+                    <v-img src="../../assets/cardImage.jpg"></v-img>
                     <v-card-title>{{ result.name }}</v-card-title>
                     <v-card-text>
                         <v-row class="mx-0">
@@ -32,7 +32,7 @@
                         </v-row>
                     </v-card-text>
                     <v-card-actions>
-                        <v-btn color="red lighten-1" text @click="view_company_page(result.name)">
+                        <v-btn color="deep-purple lighten-1" text @click="view_company_page(result.name)">
                             View Company
                         </v-btn>
                     </v-card-actions>
@@ -225,6 +225,7 @@ export default {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
+
 
 .review_container {
     display: flex;

@@ -16,7 +16,7 @@
         <div class="text">
           You got everything set up for the biggest event, you have ever organised, but you
           still need light equipment? Well, this is the place to go...
-          Be inspired by the largest range of light installatinos offered by various providers. 
+          Be inspired by the largest range of light installations offered by various providers. 
         </div>
       </div>
       <div class="section">
