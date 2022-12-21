@@ -3,6 +3,7 @@ const bcrypt   = require('bcrypt');
 const jwt      = require('jsonwebtoken');
 const JWT_SECRET = 'altan=wkdvrtuaàlmjpé)&kmqm';
 const Organizer = require('../schemas/organizer_schema.js');
+const Provider  = require('../schemas/company_schema.js');
 
 const router = express.Router();
 const { check, validationResult } = require('express-validator');

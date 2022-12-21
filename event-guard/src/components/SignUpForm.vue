@@ -94,6 +94,7 @@ export default {
                     if (status === 'error') {
                         this.isError = true;
                         this.errorMsg = response.data.error;
+                        setTimeout(function() { this.isError = false; }.bind(this), 3000);
                     } else {
                         let message = 'Successfully created an account!';
                         this.$router.replace({ name: "login", params: { message } });
