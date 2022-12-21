@@ -3,6 +3,8 @@ const Product = require('../schemas/product_schema.js');
 
 const router = express.Router();
 
+// POST REQUEST FOR ADDING NEW PRODUCT FROM SPECIFIC COMPANY
+
 router.post("/addProduct", (req, res) => {
     const { product_name, description, rent_price, details} = req.body;
 
@@ -19,10 +21,14 @@ router.post("/addProduct", (req, res) => {
       } else { console.log("failed");}
 })
 
-/*router.get('/getOwnProducts', async (req, res) => {
-    let searchProducts = await Product.find({companyName: "Scouts Brussel"});
+
+// POST REQUEST FOR GETTING THE PRODUCTS FROM ONE SPECIFIC COMPANY
+
+router.post('/getOwnProducts', async (req, res) => {
+    const name = req.body.company_name;
+    let searchProducts = await Product.find({ companyName: name });
     res.send({ payload: searchProducts });
-  })
-  */
+})
+
 
 module.exports = router;

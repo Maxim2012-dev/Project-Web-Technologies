@@ -84,23 +84,12 @@ export default {
         alertMsg: '',
         disabled: true,
         search: " ",
-            products: [
-              { id: 1, name: "Schop", shortDescription: "stevige schop in goede staat", price: 15.00, ammount: 1, organisation: "Scouts Brussel"},
-              { id: 2, name: "Koelkast", shortDescription: "goedwerkende koelkast met vriesvak", price: 30.00, ammount: 1, organisation: "Scouts Brussel"},
-              { id: 3, name: "Sjorbalk", shortDescription: "8 meter sjorbalken", price: 20.00, ammount: 30, organisation: "Scouts Brussel"},
-              { id: 4, name: "Kookpot", shortDescription: "propere, grote kookpotten met deksel", price: 20.00, ammount: 3, organisation: "Scouts Brussel"},
-              { id: 5, name: "Koelkast", shortDescription: "energiezuinige koelkasten met wieltjes", price: 35.00, ammount: 2, organisation: "Scouts Brussel"}
-            ],
-            reviews: [
-                {id: 1, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goede service!"},
-                {id: 2, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goede service!"},
-                {id: 3, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goede service!"},
-                {id: 4, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goed service!"},
-                {id: 5, username: "Kwinten", rating: 5, date: "20/12/2022", description: "Goed service!"}
-            ]
-
-        }),
+        products: null,
+        reviews: null
+    }),
     mounted() {
+        this.loadProducts();
+        this.loadReviews();
         let nameCompany = this.$route.params.companyName;
         if (nameCompany != undefined) {
             this.companyName = nameCompany;
@@ -116,6 +105,26 @@ export default {
         },
     },
     methods: {
+        loadProducts() {
+            axios.post("http://localhost:3000/getOwnProducts", {
+                company_name: this.companyName,
+            }).then(response => {
+                let result = response.data.payload;
+                if (result != undefined) {
+                    this.products = result;
+                }
+            })
+        },
+        loadReviews() {
+            axios.post("http://localhost:3000/getOwnProducts", {
+                company_name: this.companyName,
+            }).then(response => {
+                let result = response.data.payload;
+                if (result != undefined) {
+                    this.reviews = result;
+                }
+            })
+        },
         save_review() {
             const date = new Date();
             const yyyy = date.getFullYear();

@@ -30,4 +30,13 @@ router.get('/getReviews', async (req, res) => {
 })
 
 
+// POST REQUEST FOR GETTING THE REVIEWS FOR ONE SPECIFIC COMPANY
+
+router.post('/getOwnReviews', async (req, res) => {
+  const name = req.body.company_name;
+  let searchReviews = await Review.find({ nameCompany: name });
+  res.send({ payload: searchProducts });
+})
+
+
 module.exports = router;
