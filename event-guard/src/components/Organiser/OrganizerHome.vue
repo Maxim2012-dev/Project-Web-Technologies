@@ -193,8 +193,8 @@ export default {
 }
 
 #map_component {
-    width: 400px;
-    height: 350px;
+    width: 420px;
+    height: 370px;
     margin-right: 50px;
     border: 5px dotted #EDE7F6;
 }

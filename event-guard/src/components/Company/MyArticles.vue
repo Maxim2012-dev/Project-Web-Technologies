@@ -5,19 +5,20 @@
       <section class="container">
         <form>
           <img class="searchIcon" src="../../assets/search.png" alt="">
-          <input type="text" name="searchbar" v-model="search" placeholder="Search products">
+          <input type="text" name="searchbar" v-model="search" placeholder="Search products" @keyup="getSearchProducts">
         </form>
-        <button class="filter" @click="sortCheapest">Cheapest</button>
-        <button class="filter" @click="sortExpensive">Most expensive</button>
+        <v-btn class="filter" color="deep-purple lighten-1" outlined @click="sortCheapest">Cheapest</v-btn>
+        <v-btn class="filter" color="deep-purple lighten-1" outlined @click="sortExpensive">Most expensive</v-btn>
         <section class="scrollfield">
-        <div v-for="product in filteredProducts" :key="product.id" class="article">
+        <div v-for="product in products" :key="product.id" class="article">
           <article>
-            <router-link :to="{ name: 'ArticleDetails', params: { id: product.id }}">
-                <h3 class="detailArticle">{{ product.name }}</h3>
-                <b class="detailArticle"> € {{ product.price }}</b>
-                <p class="detailArticle">{{ product.shortDescription }} </p>
+            <router-link :to="{ name: 'ArticleDetails', 
+              params: { product_id: product.id, product_name: product.product_name, product_price: product.rent_price,
+                        product_description: product.product_description }}">
+                <h3 class="detailArticle">{{ product.product_name }}</h3>
+                <p class="detailArticle"> € {{ product.rent_price }}</p>
+                <p class="detailArticle">{{ product.description }} </p>
             </router-link>
-            <v-btn class="addBtn" color="deep-purple lighten-1" text @click="add_to_wishlist">Add to wishlist</v-btn>
         </article>
        </div>
       </section>
@@ -26,35 +27,57 @@
   </template>
   
   <script>
+  import axios from 'axios';
   export default {
-      data () {
-        //db.Providers.find();
-          return {
-            search: " ",
-            products: [
-              { id: 1, name: " Shovel", shortDescription: "solid shovel in good condition", price: 15.00, organisation: "Scouts Brussel"},
-              { id: 2, name: " Fridge", shortDescription: "good-working refrigerator with freezer compartment", price: 30.00, organisation: "Scouts Brussel"},
-              { id: 3, name: " Lashing beam", shortDescription: "8 meter lashing beams", price: 20.00, organisation: "Scouts Brussel"},
-              { id: 4, name: " Cooking pot", shortDescription: "clean, large cooking pots with lids", price: 20.00, organisation: "Scouts Brussel"},
-              { id: 5, name: " Fridge", shortDescription: "energy-efficient refrigerators with wheels", price: 35.00, organisation: "Scouts Brussel"}
-            ]
-          }
-        },
+    data: () => ({
+        search: " ",
+        products: null
+    }),
+    mounted() {
+      this.getCompanyProducts();
+    },
     methods: {
       sortCheapest() {
-        return this.products.sort((a, b) => a.price >= b.price ? 1 : -1); },
-      sortExpensive() {
-        return this.products.sort((a, b) => a.price < b.price ? 1 : -1); }
+        return this.products.sort((a, b) => a.rent_price >= b.rent_price ? 1 : -1); 
       },
+      sortExpensive() {
+        return this.products.sort((a, b) => a.rent_price < b.rent_price ? 1 : -1); 
+      },
+      getSearchProducts() {
+        axios.post("http://localhost:3000/getProducts", {
+            company_name: this.$store.getters.getUsername,
+            keyValue: this.search
+        }).then(response => {
+            // response might be array of search results
+            let results = response.data.payload;
+            if (results != null) {
+                this.products = results;
+            }
+        })
+      },
+      getCompanyProducts() {
+        axios.post("http://localhost:3000/getOwnProducts", {
+            username: this.$store.getters.getUsername
+        }).then(response => {
+            const results = response.data.payload;
+            if (results != undefined) {
+                this.products = results;
+            }
+        })
+      }
+    },
     computed: {
       filteredProducts() {
-        return this.products.filter(product => product.name.toLowerCase().includes(this.search.toLowerCase()))
+        if(this.products != null) {
+          return this.products.filter(product => product.name.toLowerCase().includes(this.search.toLowerCase()))
+        } return null;
       }
     }
   }
   </script>
   
   <style>
+  
   #myArticlesSection{
       width: 100%;
       height: 100vh;
@@ -71,8 +94,8 @@
     margin: 10px auto;
     padding: 20px; 
     border-radius: 10px;
-   max-width: 600px;
-   cursor: pointer;
+    max-width: 600px;
+    cursor: pointer;
   }
   .article:hover {
     background: #ddd;
@@ -86,6 +109,7 @@
   .detailArticle{
     padding-bottom: 10px;
     margin-bottom: 5px;
+    background: transparent;
   }
   
   .add{
@@ -141,8 +165,7 @@
   
   .filter{
     padding: 5px;
-    margin: 10px;
-    background-color: rgb(245, 245, 245); 
+    margin: 20px 5px 20px;
     padding: 10px; 
     box-shadow: rgba(0, 0, 0, 0.2) 0px 1.5px;
   }
@@ -152,5 +175,6 @@
     display: inline-block;
     width:auto;
 }
+
   </style>
   

@@ -13,7 +13,7 @@ const productSchema = mongoose.Schema({
     required: true
   },
   rent_price: {
-    type: String,
+    type: Number,
     required: true
   },
 });

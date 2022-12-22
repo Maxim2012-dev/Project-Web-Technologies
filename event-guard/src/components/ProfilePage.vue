@@ -21,7 +21,7 @@
                         <label for="username">Username</label>
                         <v-text-field id="username" label="Username" :rules="usernameRules" v-model="username" solo></v-text-field>
                     </v-form>
-                    <v-btn color="deep-purple lighten-1" class="white--text" :disabled="!formValidity" 
+                    <v-btn color="deep-purple lighten-1" class="white--text" :disabled="!isChanged"
                         depressed @click="saveProfile">Save Profile
                     </v-btn>
                 </v-col>
@@ -52,6 +52,10 @@ export default {
         telnr: "",
         email: "",
         username: "",
+        startName: "",
+        startTelnr: "",
+        startEmail: "",
+        startUsername: "",
         errorMsg: "",
         isError: false,
         formValidity: false,
@@ -87,6 +91,17 @@ export default {
             } else {
                 return require(`../assets/${this.srcArray[this.index%this.srcArray.length]}`);
             }
+        },
+        isChanged() {
+            const current     = [this.name, this.telnr, this.email, this.username];
+            const startValues = [this.startName, this.startTelnr, this.startEmail, this.startUsername];
+            current.forEach((currentValue, index) => {
+                const startValue = startValues[index];
+                if (!currentValue == startValue) {
+                    return true;
+                }
+            })
+            return false;
         }
     },
     mounted() {
@@ -110,16 +125,22 @@ export default {
                 this.displayUserInfo(result[0]);
             })
         }
+        this.initializeStartValues();
         this.getWishlistProducts(this.$store.getters.getUsername);
     },
     methods: {
         // display the data in the form fields
         displayUserInfo(userData) {
-            this.name = userData.name;
-            this.telnr = userData.telnr;
-            this.email = userData.email;
+            this.name     = userData.name;
+            this.telnr    = userData.telnr;
+            this.email    = userData.email;
             this.username = userData.username;
-            this.password = userData.password;
+        },
+        initializeStartValues() {
+            this.startName     = this.name;
+            this.startTelnr    = this.telnr;
+            this.startEmail    = this.email;
+            this.startUsername = this.username;
         },
         getWishlistProducts(username) {
             axios.post("http://localhost:3000/getWishlistContent", {

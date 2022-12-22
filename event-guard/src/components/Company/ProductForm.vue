@@ -42,10 +42,11 @@
       </v-card-text>
       <v-card-actions class=" articleButtons">
         <input style="display: none" type="file" @change="onFileSelected" ref="fileInput">
-        <button class="filter" style="margin-bottom: 50px; align-self: flex-start;" @click="$refs.fileInput.click()"> Click to choose photo article</button>
+        <v-btn class="filter" color="deep-purple lighten-1" outlined style="margin-bottom: 50px; align-self: flex-start;" 
+          @click="$refs.fileInput.click()"> Click to choose photo article</v-btn>
         <v-slide-x-reverse-transition>
         </v-slide-x-reverse-transition>
-        <v-btn @click="add_product">add new article</v-btn>
+        <v-btn color="deep-purple lighten-1" @click="add_product">add new article</v-btn>
       </v-card-actions>
     </v-card>
   </v-col>
@@ -77,15 +78,16 @@ export default {
           //if (this.formValidity) {
               this.isError = false;
               axios.post("http://localhost:3000/addProduct", {
-                  name: this.name,
+                  product_name: this.name,
+                  company_name: this.$store.getters.getUsername,
                   description: this.description,
-                  price: this.price,
-                  details: this.details
+                  rent_price: this.price,
               }).then(response => {
                   const status = response.data.status;
                   if (status === 'error') {
                       this.isError = true;
                       this.errorMsg = response.data.error;
+                      setTimeout(function() { this.isError = false; }.bind(this), 3000);
                   } else {
                       let message = 'Successfully added an article!';
                       this.$router.replace({ name: "MyArticles", params: { message } });

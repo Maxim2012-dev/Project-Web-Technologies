@@ -14,6 +14,16 @@ router.post('/getCompanies', async (req, res) => {
   })
 
 
+// POST REQUEST FOR GETTING COMPANY INFO
+
+router.post('/getCompanyInfo', async (req, res) => {
+  let payload = req.body.keyValue.trim();
+  let search = await Provider.find({ name: {$regex: new RegExp('^'+payload+'.*','i')}}).exec();
+  search = search.slice(0, 10);
+  res.send({ payload: search });
+})
+
+
 // GET REQUEST FOR GETTING ALL THE COMPANIES
 
 router.get('/getAllCompanyAddresses', async (req, res) => {

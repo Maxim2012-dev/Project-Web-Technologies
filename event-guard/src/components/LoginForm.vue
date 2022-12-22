@@ -59,7 +59,7 @@ export default {
             this.errorMsg = response.data.error;
             setTimeout(function() { this.isError = false; }.bind(this), 3000);
           } else {
-            this.change_user_state(response.data.data, response.data.type)
+            this.change_user_state(response.data.data, response.data.type, response.data.object)
           }
         })
       }
@@ -71,12 +71,16 @@ export default {
         this.$router.replace({ name: "providerHome", params: { username: this.username } })
       }
     },
-    change_user_state(token, typeUser) {
+    change_user_state(token, typeUser, object) {
       this.$store.commit({
         type: 'change_user_state',
         userToken: token,
         userType: typeUser,
         username: this.username 
+      })
+      this.$store.commit({
+        type: 'init_user_object',
+        object: object 
       })
       this.redirect_to_user_page(typeUser);
     }
