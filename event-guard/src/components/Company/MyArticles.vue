@@ -11,7 +11,14 @@
         <button class="filter" @click="sortExpensive">Most expensive</button>
         <section class="scrollfield">
         <div v-for="product in filteredProducts" :key="product.id" class="article">
-          <post :product="product"></post>
+          <article>
+            <router-link :to="{ name: 'ArticleDetails', params: { id: product.id }}">
+                <h3 class="detailArticle">{{ product.name }}</h3>
+                <b class="detailArticle"> € {{ product.price }}</b>
+                <p class="detailArticle">{{ product.shortDescription }} </p>
+            </router-link>
+            <v-btn class="addBtn" color="deep-purple lighten-1" text @click="add_to_wishlist">Add to wishlist</v-btn>
+        </article>
        </div>
       </section>
       </section>
@@ -19,15 +26,13 @@
   </template>
   
   <script>
-  import Post from "./SearchArticles.vue";
   export default {
-    components: { Post },
       data () {
         //db.Providers.find();
           return {
             search: " ",
             products: [
-              { id: 1, name: " Schovel", shortDescription: "solid shovel in good condition", price: 15.00, organisation: "Scouts Brussel"},
+              { id: 1, name: " Shovel", shortDescription: "solid shovel in good condition", price: 15.00, organisation: "Scouts Brussel"},
               { id: 2, name: " Fridge", shortDescription: "good-working refrigerator with freezer compartment", price: 30.00, organisation: "Scouts Brussel"},
               { id: 3, name: " Lashing beam", shortDescription: "8 meter lashing beams", price: 20.00, organisation: "Scouts Brussel"},
               { id: 4, name: " Cooking pot", shortDescription: "clean, large cooking pots with lids", price: 20.00, organisation: "Scouts Brussel"},
@@ -76,6 +81,11 @@
   .article a{
     text-decoration: none;
     color: #444;
+  }
+
+  .detailArticle{
+    padding-bottom: 10px;
+    margin-bottom: 5px;
   }
   
   .add{
