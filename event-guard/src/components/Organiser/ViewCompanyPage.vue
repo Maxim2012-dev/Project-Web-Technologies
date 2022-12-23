@@ -122,7 +122,6 @@ export default {
                 company_name: this.companyName,
             }).then(response => {
                 let result = response.data.payload;
-                console.log(result);
                 if (result != undefined) {
                     this.products = result;
                 }
@@ -168,10 +167,10 @@ export default {
         add_to_wishlist(product) {
             axios.post("http://localhost:3000/addToWishlist", {
                 organizerUserName: this.$store.getters.getUsername,
-                product_name: product.name,
+                product_name: product.product_name,
                 company_name: this.companyName,
                 description: product.description,
-                rent_price: product.price
+                rent_price: product.rent_price
             }).then(response => {
                 let result = response.data.payload;
                 if (result != undefined) {
