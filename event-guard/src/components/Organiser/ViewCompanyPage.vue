@@ -53,9 +53,9 @@
              <div v-for="product in products" :key="product.id" class="article">
                 <article>
                     <router-link :to="{ name: 'ArticleDetails', params: { id: product.id }}">
-                        <h3>{{ product.name }}</h3>
-                        <b> € {{ product.price }}</b>
-                        <p>{{ product.shortDescription }} </p>
+                        <h3>{{ product.product_name }}</h3>
+                        <p> € {{ product.rent_price }}</p>
+                        <p>{{ product.description }} </p>
                     </router-link>
                     <v-btn color="deep-purple lighten-1" text @click="add_to_wishlist(product)">Add to wishlist</v-btn>
                 </article>
@@ -77,9 +77,9 @@ export default {
         dialog: false,
         rateValue: 0,
         description: '',
-        companyName: 'Scouts Brussel',
-        companyEmail: 'Scoutsbrussel@gmail.com',
-        companyTelnr: '0480827921',
+        companyName: '',
+        companyEmail: '',
+        companyTelnr: '',
         isAlert: false,
         alertMsg: '',
         disabled: true,
@@ -88,12 +88,13 @@ export default {
         reviews: null
     }),
     mounted() {
-        this.loadProducts();
-        this.loadReviews();
         let nameCompany = this.$route.params.companyName;
         if (nameCompany != undefined) {
             this.companyName = nameCompany;
         }
+        this.getCompanyInfo();
+        this.loadProducts();
+        this.loadReviews();
     },
     computed: {
         isFormValid() {
@@ -105,18 +106,30 @@ export default {
         },
     },
     methods: {
+        getCompanyInfo() {
+            axios.post("http://localhost:3000/getCompanyInfo", {
+                keyValue: this.companyName
+            }).then(response => {
+                let result = response.data.payload;
+                if (result != undefined) {
+                    this.companyEmail = result[0].email;
+                    this.companyTelnr = result[0].telnr;
+                }
+            })
+        },
         loadProducts() {
             axios.post("http://localhost:3000/getOwnProducts", {
                 company_name: this.companyName,
             }).then(response => {
                 let result = response.data.payload;
+                console.log(result);
                 if (result != undefined) {
                     this.products = result;
                 }
             })
         },
         loadReviews() {
-            axios.post("http://localhost:3000/getOwnProducts", {
+            axios.post("http://localhost:3000/getOwnReviews", {
                 company_name: this.companyName,
             }).then(response => {
                 let result = response.data.payload;

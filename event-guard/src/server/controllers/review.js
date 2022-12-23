@@ -35,7 +35,7 @@ router.get('/getReviews', async (req, res) => {
 router.post('/getOwnReviews', async (req, res) => {
   const name = req.body.company_name;
   let searchReviews = await Review.find({ nameCompany: name });
-  res.send({ payload: searchProducts });
+  res.send({ payload: searchReviews });
 })
 
 

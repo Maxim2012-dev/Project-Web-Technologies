@@ -57,7 +57,7 @@
       },
       getCompanyProducts() {
         axios.post("http://localhost:3000/getOwnProducts", {
-            username: this.$store.getters.getUsername
+            name: this.$store.getters.getUserObject.name
         }).then(response => {
             const results = response.data.payload;
             if (results != undefined) {

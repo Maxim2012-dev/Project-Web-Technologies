@@ -79,11 +79,12 @@ export default {
               this.isError = false;
               axios.post("http://localhost:3000/addProduct", {
                   product_name: this.name,
-                  company_name: this.$store.getters.getUsername,
+                  company_name: this.$store.getters.getUserObject.name,
                   description: this.description,
                   rent_price: this.price,
               }).then(response => {
                   const status = response.data.status;
+                  console.log(this.$store.getters.getUserObject.name);
                   if (status === 'error') {
                       this.isError = true;
                       this.errorMsg = response.data.error;

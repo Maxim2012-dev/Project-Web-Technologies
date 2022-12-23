@@ -36,8 +36,8 @@ router.post('/getProducts', async (req, res) => {
 // POST REQUEST FOR GETTING THE PRODUCTS FROM ONE SPECIFIC COMPANY
 
 router.post('/getOwnProducts', async (req, res) => {
-    const username = req.body.username;
-    let searchProducts = await Product.find({ company_name: username });
+    const companyName = req.body.company_name;
+    let searchProducts = await Product.find({ company_name: companyName });
     res.send({ payload: searchProducts });
 })
 

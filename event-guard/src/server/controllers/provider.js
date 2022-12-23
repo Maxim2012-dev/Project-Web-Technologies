@@ -18,6 +18,7 @@ router.post('/getCompanies', async (req, res) => {
 
 router.post('/getCompanyInfo', async (req, res) => {
   let payload = req.body.keyValue.trim();
+  console.log(payload);
   let search = await Provider.find({ name: {$regex: new RegExp('^'+payload+'.*','i')}}).exec();
   search = search.slice(0, 10);
   res.send({ payload: search });
