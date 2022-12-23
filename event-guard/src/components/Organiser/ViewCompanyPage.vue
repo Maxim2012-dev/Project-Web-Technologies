@@ -57,7 +57,7 @@
                         <p> € {{ product.rent_price }}</p>
                         <p>{{ product.description }} </p>
                     </router-link>
-                    <v-btn color="deep-purple lighten-1" text @click="add_to_wishlist(product)">Add to wishlist</v-btn>
+                    <v-btn color="deep-purple lighten-1" text @click="add_to_wishlist(product)">Add to wish list</v-btn>
                 </article>
              </div>
             </section>

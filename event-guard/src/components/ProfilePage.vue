@@ -21,7 +21,7 @@
                         <label for="username">Username</label>
                         <v-text-field id="username" label="Username" :rules="usernameRules" v-model="username" solo></v-text-field>
                     </v-form>
-                    <v-btn color="deep-purple lighten-1" class="white--text" :disabled="!isChanged"
+                    <v-btn color="deep-purple lighten-1" class="white--text" :disabled="!formValidity"
                         depressed @click="saveProfile">Save Profile
                     </v-btn>
                 </v-col>
@@ -125,7 +125,6 @@ export default {
                 this.displayUserInfo(result[0]);
             })
         }
-        this.initializeStartValues();
         this.getWishlistProducts(this.$store.getters.getUsername);
     },
     methods: {
@@ -135,12 +134,6 @@ export default {
             this.telnr    = userData.telnr;
             this.email    = userData.email;
             this.username = userData.username;
-        },
-        initializeStartValues() {
-            this.startName     = this.name;
-            this.startTelnr    = this.telnr;
-            this.startEmail    = this.email;
-            this.startUsername = this.username;
         },
         getWishlistProducts(username) {
             axios.post("http://localhost:3000/getWishlistContent", {
